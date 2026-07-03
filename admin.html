@@ -739,6 +739,7 @@
     let currentEmail = "";
     let countdownTimer = null;
     let admin = null;
+    let sessionToken = null; // set after adminVerifyOTP succeeds; required for every admin* call
 
     // ── GAS call ──────────────────────────────────────────────
     async function callGAS(payload) {
@@ -746,9 +747,16 @@
         method: "POST",
         redirect: "follow",
         headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify({ ...payload, secret: SECRET })
+        body: JSON.stringify({ ...payload, secret: SECRET, sessionToken })
       });
-      return res.json();
+      const data = await res.json();
+      if (data.status === "error" && /session invalid|expired/i.test(data.message || "")) {
+        localStorage.removeItem(SESSION_KEY);
+        sessionToken = null;
+        toast("Session expired. Please sign in again.", true);
+        setTimeout(() => window.location.reload(), 1200);
+      }
+      return data;
     }
 
     function toast(msg, isError) {
@@ -853,7 +861,8 @@
         const res = await callGAS({ action: "adminVerifyOTP", email: currentEmail, otp });
         if (res.status === "success") {
           admin = res.data.admin;
-          localStorage.setItem(SESSION_KEY, JSON.stringify(admin));
+          sessionToken = res.data.sessionToken;
+          localStorage.setItem(SESSION_KEY, JSON.stringify({ admin, sessionToken }));
           clearInterval(countdownTimer);
           enterDashboard();
         } else {
@@ -912,8 +921,12 @@
       const raw = localStorage.getItem(SESSION_KEY);
       if (!raw) return false;
       try {
-        admin = JSON.parse(raw);
-        if (admin && admin.email) return true;
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.admin && parsed.admin.email && parsed.sessionToken) {
+          admin = parsed.admin;
+          sessionToken = parsed.sessionToken;
+          return true;
+        }
       } catch (e) {}
       localStorage.removeItem(SESSION_KEY);
       return false;
@@ -928,6 +941,8 @@
 
     function adminSignOut() {
       localStorage.removeItem(SESSION_KEY);
+      sessionToken = null;
+      admin = null;
       window.location.reload();
     }
 
