@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WV Launch Program · Weaving Vibes</title>
+  <meta name="description" content="An invitation-only program for independent designers. First access to new fabrics, exclusive pricing, and direct founder time." />
+  <meta property="og:title" content="WV Launch Program · Weaving Vibes" />
+  <meta property="og:description" content="Fabric. First. For you." />
+  <meta property="og:image" content="assets/og/og-image.png" />
+
+  <!-- Fonts: Cormorant Garamond (display) + DM Sans (body) + DM Mono (IDs) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ── Tokens ─────────────────────────────────────────── */
+    :root {
+      --cream:        #F8F5F0;
+      --white:        #FFFFFF;
+      --olive:        #6B7C4E;
+      --olive-dark:   #4A5636;
+      --olive-light:  #D6DFC8;
+      --olive-faint:  #EEF2E8;
+      --charcoal:     #2C2C2A;
+      --muted:        #7A7A72;
+      --border:       #E2DDD6;
+      --amber:        #C8843A;
+      --serif:        'Cormorant Garamond', Georgia, serif;
+      --sans:         'DM Sans', system-ui, sans-serif;
+      --mono:         'DM Mono', monospace;
+    }
+
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav img.logo {
+      height: 36px;
+      width: auto;
+    }
+    nav .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    nav .signin-link {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    nav .signin-link:hover { color: var(--charcoal); }
+    nav .nav-cta {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      background: var(--olive);
+      color: var(--white);
+      padding: 10px 22px;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    nav .nav-cta:hover { background: var(--olive-dark); }
+
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--olive);
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 5.5vw, 68px);
+      font-weight: 400;
+      line-height: 1.08;
+      color: var(--charcoal);
+      margin-bottom: 28px;
+      letter-spacing: -0.01em;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--olive);
+    }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 40px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      background: var(--olive);
+      color: var(--white);
+      padding: 16px 36px;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { background: var(--olive-dark); }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(3px); }
+    .hero-signin {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hero-signin a {
+      color: var(--olive);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* Hero right — woven texture block */
+    .hero-visual {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: var(--olive-faint);
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-visual-inner {
+      text-align: center;
+      padding: 40px;
+    }
+    .hero-visual-inner .wv-mark {
+      font-family: var(--serif);
+      font-size: 120px;
+      font-weight: 400;
+      color: var(--olive-light);
+      line-height: 1;
+      user-select: none;
+    }
+    .hero-visual-inner .visual-tag {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-top: 16px;
+    }
+    /* Subtle weave lines overlay */
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 18px,
+          rgba(107,124,78,0.07) 18px,
+          rgba(107,124,78,0.07) 19px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 18px,
+          rgba(107,124,78,0.07) 18px,
+          rgba(107,124,78,0.07) 19px
+        );
+    }
+    /* Member count pill */
+    .member-count-pill {
+      position: absolute;
+      bottom: 28px;
+      left: 28px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .member-count-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--olive);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+    .member-count-pill .pill-text {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+    .member-count-pill .pill-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── Divider rule ─────────────────────────────────────── */
+    .rule {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Benefits ─────────────────────────────────────────── */
+    .benefits {
+      padding: 88px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 56px;
+      max-width: 560px;
+      line-height: 1.2;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .benefit-card {
+      background: var(--cream);
+      padding: 36px 32px;
+      transition: background 0.2s;
+    }
+    .benefit-card:hover { background: var(--white); }
+    .benefit-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 20px;
+      color: var(--olive);
+    }
+    .benefit-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .benefit-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── How it works ─────────────────────────────────────── */
+    .how {
+      padding: 88px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-top: 56px;
+    }
+    .how-step {
+      position: relative;
+    }
+    .how-step-num {
+      font-family: var(--serif);
+      font-size: 56px;
+      font-weight: 400;
+      color: var(--olive-light);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .how-step-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+    }
+    .how-step-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    /* Connector line between steps */
+    .how-steps .how-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 28px;
+      right: -24px;
+      width: 48px;
+      height: 1px;
+      background: var(--olive-light);
+    }
+
+    /* ── What members get strip ───────────────────────────── */
+    .members-strip {
+      background: var(--olive-dark);
+      padding: 64px 0;
+    }
+    .members-strip .container {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .members-strip-heading {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3vw, 38px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .members-strip-heading em {
+      font-style: italic;
+      color: var(--olive-light);
+    }
+    .members-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 40px;
+    }
+    .members-list li {
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .members-list li::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--olive-light);
+      margin-top: 11px;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA section ──────────────────────────────────────── */
+    .cta-section {
+      padding: 96px 0;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .cta-section .section-eyebrow {
+      justify-content: center;
+      display: block;
+      margin-bottom: 16px;
+    }
+    .cta-section h2 {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .cta-section h2 em {
+      font-style: italic;
+      color: var(--olive);
+    }
+    .cta-section p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 40px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-section .btn-primary {
+      margin: 0 auto;
+    }
+    .cta-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      padding: 32px 0;
+      background: var(--cream);
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer img.logo { height: 28px; }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--charcoal); }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── Scroll reveal ────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Mobile ───────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero .container {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .hero-visual { aspect-ratio: 3/2; }
+      .hero-visual-inner .wv-mark { font-size: 80px; }
+      .benefits-grid {
+        grid-template-columns: 1fr;
+      }
+      .how-steps {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .how-step::after { display: none; }
+      .members-strip .container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .members-list {
+        grid-template-columns: 1fr;
+      }
+      footer .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      nav .signin-link { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 56px 0 48px; }
+      .benefits, .how { padding: 56px 0; }
+      .cta-section { padding: 64px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ───────────────────────────────────────────────── -->
+  <nav>
+    <div class="container">
+      <a href="index.html">
+        <img
+          src="https://weavingvibes.com/cdn/shop/files/WV-Canva-Logo-1-1_b2793124-e179-4d02-a07e-6b00432c176a.png?v=1735047573"
+          alt="Weaving Vibes"
+          class="logo"
+        />
+      </a>
+      <div class="nav-right">
+        <a href="signup.html?signin=true" class="signin-link">Already a member? Sign in</a>
+        <a href="signup.html" class="nav-cta">Join the program</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero ──────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-left">
+        <p class="hero-eyebrow">For designers · By invitation only</p>
+        <h1>Fabric.<br /><em>First.</em><br />For you.</h1>
+        <p class="hero-sub">
+          Weaving Vibes works directly with independent designers.
+          You get new fabrics before the market, at prices that never go public.
+        </p>
+        <div class="hero-actions">
+          <a href="signup.html" class="btn-primary">
+            Join the program
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <p class="hero-signin">
+            Already a member?
+            <a href="signup.html?signin=true">Sign in here</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-visual-inner">
+          <div class="wv-mark">WV</div>
+          <p class="visual-tag">Launch Program</p>
+        </div>
+        <div class="member-count-pill">
+          <span class="dot"></span>
+          <div>
+            <div class="pill-text">24 designers inside</div>
+            <div class="pill-sub">Program is live</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Benefits ──────────────────────────────────────────── -->
+  <section class="benefits">
+    <div class="container">
+      <p class="section-eyebrow reveal">What you get</p>
+      <h2 class="section-heading reveal">Everything a serious designer needs. Nothing they don't.</h2>
+      <div class="benefits-grid">
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="18" cy="18" r="14"/>
+            <path d="M18 10v8l5 3" stroke-linecap="round"/>
+          </svg>
+          <h3 class="benefit-title">48-hour fabric recommendation</h3>
+          <p class="benefit-body">Share your season brief. We shortlist fabrics built around your vision within 48 hours.</p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="8" y="6" width="20" height="24" rx="2"/>
+            <path d="M12 12h12M12 17h12M12 22h7" stroke-linecap="round"/>
+          </svg>
+          <h3 class="benefit-title">72-hour swatchbook dispatch</h3>
+          <p class="benefit-body">Liked what you saw? Physical swatches at your door in 72 hours — no minimum, no delay.</p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="18" cy="14" r="6"/>
+            <path d="M8 30c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke-linecap="round"/>
+          </svg>
+          <h3 class="benefit-title">Founder's time, for you</h3>
+          <p class="benefit-body">Direct 1:1 with our founder. No sales rep. No pitch deck. Just fabric and your brief.</p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 6l2.5 7.5H28l-6.5 4.7 2.5 7.5L18 21.2l-6 4.5 2.5-7.5L8 13.5h7.5z"/>
+          </svg>
+          <h3 class="benefit-title">First access, always</h3>
+          <p class="benefit-body">New fabrics reach program members before anyone else. You pick before it reaches the market.</p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 18h16M10 13h16M10 23h10" stroke-linecap="round"/>
+            <path d="M6 8h24v20H6z" rx="2"/>
+          </svg>
+          <h3 class="benefit-title">Pricing that never goes public</h3>
+          <p class="benefit-body">Exclusive rate for members only. These prices do not appear on our website or any catalogue.</p>
+        </div>
+
+        <div class="benefit-card reveal">
+          <svg class="benefit-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="6" y="10" width="24" height="18" rx="2"/>
+            <path d="M12 10V8a6 6 0 0112 0v2" stroke-linecap="round"/>
+            <path d="M15 19l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3 class="benefit-title">Your credibility certificate</h3>
+          <p class="benefit-body">After your first purchase, we issue a WV Verified Designer Partner certificate. Real proof for your clients.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How it works ───────────────────────────────────────── -->
+  <section class="how">
+    <div class="container">
+      <p class="section-eyebrow reveal">How it works</p>
+      <h2 class="section-heading reveal">Three steps. No friction.</h2>
+      <div class="how-steps">
+
+        <div class="how-step reveal">
+          <div class="how-step-num">1</div>
+          <h3 class="how-step-title">Join</h3>
+          <p class="how-step-body">Fill a 60-second form. Verify your email with a one-time code. You're in.</p>
+        </div>
+
+        <div class="how-step reveal">
+          <div class="how-step-num">2</div>
+          <h3 class="how-step-title">Explore</h3>
+          <p class="how-step-body">Browse members-only fabric drops, drop your season brief, or book time directly with our founder.</p>
+        </div>
+
+        <div class="how-step reveal">
+          <div class="how-step-num">3</div>
+          <h3 class="how-step-title">Create</h3>
+          <p class="how-step-body">Get the right fabric — sourced, recommended, or developed from scratch — exactly for your work.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Dark strip ─────────────────────────────────────────── -->
+  <section class="members-strip">
+    <div class="container">
+      <h2 class="members-strip-heading reveal">
+        Built for designers<br/>who take their<br/><em>craft seriously.</em>
+      </h2>
+      <ul class="members-list reveal">
+        <li>Hemp, bamboo, and natural blends</li>
+        <li>Low minimum order quantities</li>
+        <li>Ready stock and custom development</li>
+        <li>Sustainable, AZO-free options</li>
+        <li>Mumbai studio visits welcome</li>
+        <li>Video consultations available</li>
+        <li>Swatchbook dispatched in 72 hours</li>
+        <li>Manufacturer direct — no middlemen</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Bottom CTA ─────────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <p class="section-eyebrow">Ready to join?</p>
+      <h2>Fabric. <em>Your way.</em></h2>
+      <p>It takes 60 seconds. OTP verified. No spam, ever.</p>
+      <a href="signup.html" class="btn-primary">
+        Join the program
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <p class="cta-note">For independent designers only · Mumbai & across India</p>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <img
+        src="https://weavingvibes.com/cdn/shop/files/WV-Canva-Logo-1-1_b2793124-e179-4d02-a07e-6b00432c176a.png?v=1735047573"
+        alt="Weaving Vibes"
+        class="logo"
+      />
+      <div class="footer-links">
+        <a href="https://weavingvibes.com" target="_blank" rel="noopener">weavingvibes.com</a>
+        <a href="mailto:hello@weavingvibes.com">hello@weavingvibes.com</a>
+      </div>
+      <p class="footer-copy">© 2026 Weaving Vibes</p>
+    </div>
+  </footer>
+
+  <script defer>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 80);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

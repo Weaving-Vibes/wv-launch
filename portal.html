@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Portal · WV Launch Program</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ── Tokens ──────────────────────────────────────────── */
+    :root {
+      --cream:       #F8F5F0;
+      --white:       #FFFFFF;
+      --olive:       #6B7C4E;
+      --olive-dark:  #4A5636;
+      --olive-light: #D6DFC8;
+      --olive-faint: #EEF2E8;
+      --charcoal:    #2C2C2A;
+      --muted:       #7A7A72;
+      --border:      #E2DDD6;
+      --amber:       #C8843A;
+      --red:         #B84040;
+      --error-bg:    #FAF0F0;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+      --mono:        'DM Mono', monospace;
+    }
+
+    /* ── Reset ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    nav img.logo { height: 32px; flex-shrink: 0; }
+
+    /* Tab nav */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      height: 100%;
+    }
+    .nav-tab {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+      background: none;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      font-family: var(--sans);
+    }
+    .nav-tab:hover { color: var(--charcoal); }
+    .nav-tab.active {
+      color: var(--charcoal);
+      border-bottom-color: var(--olive);
+    }
+
+    /* Member dropdown */
+    .nav-member {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-member-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 8px 14px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--charcoal);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .nav-member-btn:hover { background: var(--cream); }
+    .nav-member-btn svg { color: var(--muted); }
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      min-width: 180px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      display: none;
+      z-index: 300;
+    }
+    .nav-dropdown.open { display: block; }
+    .nav-dropdown-item {
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: var(--sans);
+    }
+    .nav-dropdown-item:hover { background: var(--cream); color: var(--charcoal); }
+    .nav-dropdown-item.signout { color: var(--red); }
+    .nav-dropdown-item.signout:hover { background: var(--error-bg); }
+    .nav-dropdown-divider { border-top: 1px solid var(--border); }
+
+    /* ── Page container ──────────────────────────────────── */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    /* ── Tab panels ──────────────────────────────────────── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Section header ──────────────────────────────────── */
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3vw, 36px);
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 40px;
+    }
+
+    /* ── Fabric cards ────────────────────────────────────── */
+    .fabric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .fabric-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+    .fabric-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .fabric-img-wrap {
+      position: relative;
+      aspect-ratio: 4/3;
+      background: var(--olive-faint);
+      overflow: hidden;
+    }
+    .fabric-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .fabric-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 48px;
+      color: var(--olive-light);
+    }
+    .members-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--olive);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .almost-gone-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--red);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .fabric-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .fabric-name {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .fabric-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .fabric-price {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--olive-dark);
+      margin-bottom: 14px;
+    }
+    .fabric-price span {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .stock-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .stock-bar-track {
+      height: 4px;
+      background: var(--olive-light);
+      border-radius: 2px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .stock-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--amber);
+      transition: width 0.4s ease;
+    }
+    .stock-bar-fill.low { background: var(--red); }
+    .btn-request {
+      margin-top: auto;
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--olive);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-request:hover { background: var(--olive-dark); }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--white);
+    }
+    .empty-state .empty-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 20px;
+      color: var(--olive-light);
+    }
+    .empty-state h3 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .empty-state p {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 360px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Modal ───────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(44,44,42,0.5);
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 2px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .modal-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 1.2;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--charcoal); }
+    .modal-body { padding: 24px 28px 28px; }
+    .modal-fabric-name {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .modal-fabric-name strong { color: var(--charcoal); }
+    .modal-success {
+      text-align: center;
+      padding: 16px 0;
+      display: none;
+    }
+    .modal-success .success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--olive-faint);
+      border: 1px solid var(--olive-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .modal-success h3 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .modal-success p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Form elements ───────────────────────────────────── */
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder { color: #B0ADA7; }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--olive);
+      background: var(--white);
+    }
+    .field textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--muted);
+      pointer-events: none;
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field-hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+
+    /* Chip selects */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: var(--cream);
+      user-select: none;
+    }
+    .chip:hover { border-color: var(--olive); color: var(--olive); }
+    .chip.selected {
+      background: var(--olive-faint);
+      border-color: var(--olive);
+      color: var(--olive-dark);
+    }
+
+    /* Submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--olive);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--olive-dark); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-submit .spinner {
+      width: 15px; height: 15px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: 0.7; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .form-error {
+      background: var(--error-bg);
+      border: 1px solid #EDCBCB;
+      border-radius: 2px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: none;
+    }
+    .form-error.show { display: block; }
+
+    /* ── Book a visit tab ────────────────────────────────── */
+    .visit-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .visit-card {
+      border: 2px solid var(--border);
+      border-radius: 2px;
+      padding: 24px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      background: var(--white);
+    }
+    .visit-card:hover { border-color: var(--olive-light); }
+    .visit-card.selected {
+      border-color: var(--olive);
+      background: var(--olive-faint);
+    }
+    .visit-card-icon {
+      width: 36px;
+      height: 36px;
+      color: var(--olive);
+      margin-bottom: 14px;
+    }
+    .visit-card-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .visit-card-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    .visit-form-wrap {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 32px;
+      max-width: 560px;
+    }
+    .visit-form-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 24px;
+    }
+    .visit-confirmation {
+      background: var(--olive-faint);
+      border: 1px solid var(--olive-light);
+      border-radius: 2px;
+      padding: 24px;
+      display: none;
+    }
+    .visit-confirmation.show { display: block; }
+    .visit-confirmation h3 {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--olive-dark);
+      margin-bottom: 8px;
+    }
+    .visit-confirmation p { font-size: 14px; color: var(--olive-dark); line-height: 1.7; opacity: 0.85; }
+
+    /* ── Ideas tab ───────────────────────────────────────── */
+    .ideas-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .ideas-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 32px;
+    }
+    .ideas-card-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 8px;
+    }
+    .ideas-card-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .ideas-card-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .ideas-success {
+      text-align: center;
+      padding: 24px 0;
+      display: none;
+    }
+    .ideas-success .s-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--olive-faint);
+      border: 1px solid var(--olive-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .ideas-success h3 {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .ideas-success p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Profile tab ─────────────────────────────────────── */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .profile-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px;
+    }
+    .profile-card-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .profile-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+    .profile-field:last-of-type { border-bottom: none; }
+    .profile-field-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .profile-field-value {
+      font-size: 14px;
+      color: var(--charcoal);
+      text-align: right;
+      word-break: break-all;
+    }
+    .member-id-block {
+      background: var(--olive-faint);
+      border: 1px solid var(--olive-light);
+      border-radius: 2px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .member-id-block .mid-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--olive);
+    }
+    .member-id-block .mid-value {
+      font-family: var(--mono);
+      font-size: 20px;
+      color: var(--olive-dark);
+    }
+
+    /* Certificate */
+    .cert-locked {
+      background: var(--cream);
+      border: 1px dashed var(--border);
+      border-radius: 2px;
+      padding: 28px;
+      text-align: center;
+    }
+    .cert-locked svg { color: var(--olive-light); margin: 0 auto 14px; display: block; }
+    .cert-locked h3 {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .cert-locked p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .cert-unlocked { display: none; }
+    .cert-preview {
+      border: 1px solid var(--olive-light);
+      border-radius: 2px;
+      padding: 28px 32px;
+      background: var(--cream);
+      text-align: center;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .cert-preview::before {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--olive-light);
+      pointer-events: none;
+    }
+    .cert-preview .cert-logo {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--olive-dark);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .cert-preview .cert-rule { border: none; border-top: 1px solid var(--olive-light); margin: 12px 0; }
+    .cert-preview .cert-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 12px;
+    }
+    .cert-preview .cert-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+    }
+    .cert-preview .cert-studio { font-size: 14px; color: var(--muted); margin-bottom: 12px; }
+    .cert-preview .cert-body { font-size: 13px; color: var(--charcoal); line-height: 1.7; }
+    .cert-preview .cert-footer {
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .btn-download-cert {
+      width: 100%;
+      padding: 12px 20px;
+      background: var(--olive-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-download-cert:hover { background: var(--olive); }
+
+    /* Loading shimmer */
+    .shimmer {
+      background: linear-gradient(90deg, var(--border) 25%, var(--olive-faint) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s ease-in-out infinite;
+      border-radius: 2px;
+    }
+    @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+    /* ── Mobile ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .fabric-grid { grid-template-columns: 1fr 1fr; }
+      .ideas-sections { grid-template-columns: 1fr; }
+      .profile-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 0 16px; }
+      .nav-tab { padding: 0 12px; font-size: 12px; }
+      .page { padding: 32px 16px 60px; }
+      .fabric-grid { grid-template-columns: 1fr; }
+      .visit-options { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
+      .visit-form-wrap { padding: 24px 20px; }
+      .ideas-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html">
+      <img
+        src="https://weavingvibes.com/cdn/shop/files/WV-Canva-Logo-1-1_b2793124-e179-4d02-a07e-6b00432c176a.png?v=1735047573"
+        alt="Weaving Vibes"
+        class="logo"
+      />
+    </a>
+
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('drops')">Drops</button>
+      <button class="nav-tab" onclick="switchTab('visit')">Book a visit</button>
+      <button class="nav-tab" onclick="switchTab('ideas')">Share ideas</button>
+      <button class="nav-tab" onclick="switchTab('profile')">My profile</button>
+    </div>
+
+    <div class="nav-member">
+      <button class="nav-member-btn" id="member-btn" onclick="toggleDropdown()">
+        <span id="nav-member-name">Welcome</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown" id="nav-dropdown">
+        <div style="padding: 12px 16px; border-bottom: 1px solid var(--border);">
+          <div style="font-size: 12px; color: var(--muted);">Member ID</div>
+          <div style="font-family: var(--mono); font-size: 14px; color: var(--olive-dark);" id="dropdown-member-id">—</div>
+        </div>
+        <button class="nav-dropdown-item" onclick="switchTab('profile'); closeDropdown();">My profile</button>
+        <button class="nav-dropdown-item signout" onclick="signOut()">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Page ─────────────────────────────────────────────── -->
+  <div class="page">
+
+    <!-- ── TAB 1: Drops ───────────────────────────────────── -->
+    <div class="tab-panel active" id="panel-drops">
+      <p class="section-eyebrow">Members only</p>
+      <h1 class="section-title">Exclusive fabric drops</h1>
+      <p class="section-sub">These fabrics are not available on our website or to the public. Pricing is exclusive to this program.</p>
+      <div id="drops-container">
+        <!-- Loaded via JS -->
+        <div class="fabric-grid" id="drops-shimmer">
+          <div style="height:320px;" class="shimmer"></div>
+          <div style="height:320px;" class="shimmer"></div>
+          <div style="height:320px;" class="shimmer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB 2: Book a visit ────────────────────────────── -->
+    <div class="tab-panel" id="panel-visit">
+      <p class="section-eyebrow">Direct access</p>
+      <h1 class="section-title">Book time with us</h1>
+      <p class="section-sub">Visit our Mumbai studio or hop on a video call. No sales pitch — just you, your brief, and our fabrics.</p>
+
+      <div class="visit-options">
+        <div class="visit-card selected" id="visit-studio-card" onclick="selectVisitType('studio')">
+          <svg class="visit-card-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 4C13.582 4 10 7.582 10 12c0 6 8 16 8 16s8-10 8-16c0-4.418-3.582-8-8-8z"/>
+            <circle cx="18" cy="12" r="3"/>
+          </svg>
+          <div class="visit-card-title">Visit our studio</div>
+          <div class="visit-card-sub">Come see the fabrics in person. Mumbai studio, by appointment.</div>
+        </div>
+        <div class="visit-card" id="visit-video-card" onclick="selectVisitType('video')">
+          <svg class="visit-card-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="4" y="10" width="20" height="16" rx="2"/>
+            <path d="M24 16l8-4v12l-8-4v-4z"/>
+          </svg>
+          <div class="visit-card-title">Video meeting</div>
+          <div class="visit-card-sub">We'll share a Google Meet link once your booking is confirmed.</div>
+        </div>
+      </div>
+
+      <div class="visit-form-wrap">
+        <div class="visit-form-title" id="visit-form-title">Studio visit details</div>
+        <div class="form-error" id="visit-error"></div>
+
+        <div id="visit-form">
+          <div class="field-row">
+            <div class="field">
+              <label for="visit-date">Preferred date</label>
+              <input type="date" id="visit-date" />
+            </div>
+            <div class="field">
+              <label for="visit-time">Time slot</label>
+              <div class="select-wrap">
+                <select id="visit-time">
+                  <option value="" disabled selected>Select slot</option>
+                  <option value="Morning (10am–12pm)">Morning (10am–12pm)</option>
+                  <option value="Afternoon (12pm–3pm)">Afternoon (12pm–3pm)</option>
+                  <option value="Evening (3pm–6pm)">Evening (3pm–6pm)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="visit-notes">What would you like to see?</label>
+            <textarea id="visit-notes" placeholder="Tell us about your brief, what fabrics you have in mind, or any questions…"></textarea>
+          </div>
+          <button class="btn-submit" id="btn-book-visit" onclick="bookVisit()">
+            <span class="btn-text">Confirm booking</span>
+            <div class="spinner"></div>
+          </button>
+          <p class="form-note">We'll confirm within 24 hours and send details to your registered email.</p>
+        </div>
+
+        <div class="visit-confirmation" id="visit-confirmation">
+          <h3>Booking received.</h3>
+          <p id="visit-confirmation-msg">We'll reach out within 24 hours to confirm your slot and share details.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB 3: Share ideas ─────────────────────────────── -->
+    <div class="tab-panel" id="panel-ideas">
+      <p class="section-eyebrow">Collaborate</p>
+      <h1 class="section-title">Share your ideas</h1>
+      <p class="section-sub">Drop a season brief or start a custom fabric — our team will respond within 48 hours.</p>
+
+      <div class="ideas-sections">
+
+        <!-- Season brief -->
+        <div class="ideas-card">
+          <p class="ideas-card-eyebrow">Season brief</p>
+          <h2 class="ideas-card-title">Tell us about your next season</h2>
+          <p class="ideas-card-sub">We'll shortlist fabrics built around your vision and get back within 48 hours.</p>
+
+          <div class="form-error" id="brief-error"></div>
+
+          <div id="brief-form">
+            <div class="field">
+              <label for="brief-collection">Collection name</label>
+              <input type="text" id="brief-collection" placeholder="e.g. Monsoon Edit 2026" />
+            </div>
+            <div class="field">
+              <label for="brief-season">Season type</label>
+              <div class="select-wrap">
+                <select id="brief-season">
+                  <option value="" disabled selected>Select season</option>
+                  <option value="SS">Spring / Summer</option>
+                  <option value="AW">Autumn / Winter</option>
+                  <option value="Resort">Resort</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label>What are you making?</label>
+              <div class="chips" id="making-chips">
+                <div class="chip" data-value="RTW" onclick="toggleChip(this, 'making-chips')">Ready to Wear</div>
+                <div class="chip" data-value="Couture" onclick="toggleChip(this, 'making-chips')">Couture</div>
+                <div class="chip" data-value="Accessories" onclick="toggleChip(this, 'making-chips')">Accessories</div>
+                <div class="chip" data-value="Home" onclick="toggleChip(this, 'making-chips')">Homeware</div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="brief-mood">Mood & direction</label>
+              <textarea id="brief-mood" placeholder="Describe the feel, reference colours, textures, drape, anything that captures the vision…"></textarea>
+            </div>
+            <div class="field">
+              <label for="brief-budget">Budget per metre (optional)</label>
+              <div class="select-wrap">
+                <select id="brief-budget">
+                  <option value="">No preference</option>
+                  <option value="Under ₹300">Under ₹300</option>
+                  <option value="₹300–600">₹300–600</option>
+                  <option value="₹600–1000">₹600–1000</option>
+                  <option value="Above ₹1000">Above ₹1000</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn-submit" id="btn-brief" onclick="submitBrief()">
+              <span class="btn-text">Send brief</span>
+              <div class="spinner"></div>
+            </button>
+            <p class="form-note">Our team typically replies within 48 hours with fabric suggestions.</p>
+          </div>
+
+          <div class="ideas-success" id="brief-success">
+            <div class="s-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Brief received.</h3>
+            <p>We'll get back to you within 48 hours with fabric suggestions tailored to your collection.</p>
+          </div>
+        </div>
+
+        <!-- Custom fabric -->
+        <div class="ideas-card">
+          <p class="ideas-card-eyebrow">Custom development</p>
+          <h2 class="ideas-card-title">Want something made from scratch?</h2>
+          <p class="ideas-card-sub">Tell us what you need — fibre, weight, weave. We'll call you within 24 hours.</p>
+
+          <div class="form-error" id="custom-error"></div>
+
+          <div id="custom-form">
+            <div class="field">
+              <label>Fibre preference</label>
+              <div class="chips" id="fibre-chips">
+                <div class="chip" data-value="Hemp" onclick="toggleChip(this, 'fibre-chips')">Hemp</div>
+                <div class="chip" data-value="Bamboo" onclick="toggleChip(this, 'fibre-chips')">Bamboo</div>
+                <div class="chip" data-value="Hemp-Bamboo Blend" onclick="toggleChip(this, 'fibre-chips')">Hemp-Bamboo</div>
+                <div class="chip" data-value="Other" onclick="toggleChip(this, 'fibre-chips')">Other</div>
+              </div>
+            </div>
+            <div class="field">
+              <label>GSM range</label>
+              <div class="chips" id="gsm-chips">
+                <div class="chip" data-value="100–200 GSM" onclick="toggleChip(this, 'gsm-chips')">100–200</div>
+                <div class="chip" data-value="200–400 GSM" onclick="toggleChip(this, 'gsm-chips')">200–400</div>
+                <div class="chip" data-value="400–600 GSM" onclick="toggleChip(this, 'gsm-chips')">400–600</div>
+                <div class="chip" data-value="600+ GSM" onclick="toggleChip(this, 'gsm-chips')">600+</div>
+              </div>
+            </div>
+            <div class="field">
+              <label>Width preference</label>
+              <div class="chips" id="width-chips">
+                <div class="chip" data-value='44"' onclick="toggleChip(this, 'width-chips')">44"</div>
+                <div class="chip" data-value='58"' onclick="toggleChip(this, 'width-chips')">58"</div>
+                <div class="chip" data-value='60"' onclick="toggleChip(this, 'width-chips')">60"</div>
+                <div class="chip" data-value="No preference" onclick="toggleChip(this, 'width-chips')">No preference</div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="custom-texture">Texture & finish notes</label>
+              <textarea id="custom-texture" placeholder="Describe weave structure, surface feel, drape quality, finish…"></textarea>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="custom-qty">Quantity needed</label>
+                <div class="select-wrap">
+                  <select id="custom-qty">
+                    <option value="" disabled selected>Select</option>
+                    <option value="Under 100m">Under 100m</option>
+                    <option value="100–500m">100–500m</option>
+                    <option value="500m+">500m+</option>
+                    <option value="Unsure">Unsure</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="custom-timeline">Timeline</label>
+                <div class="select-wrap">
+                  <select id="custom-timeline">
+                    <option value="" disabled selected>Select</option>
+                    <option value="Within 1 month">Within 1 month</option>
+                    <option value="1–3 months">1–3 months</option>
+                    <option value="3+ months">3+ months</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button class="btn-submit" id="btn-custom" onclick="submitCustom()">
+              <span class="btn-text">Send request</span>
+              <div class="spinner"></div>
+            </button>
+            <p class="form-note">We'll call you within 24 hours to discuss your requirements.</p>
+          </div>
+
+          <div class="ideas-success" id="custom-success">
+            <div class="s-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Request received.</h3>
+            <p>We'll call you within 24 hours to discuss your custom fabric requirements.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TAB 4: My profile ──────────────────────────────── -->
+    <div class="tab-panel" id="panel-profile">
+      <p class="section-eyebrow">Your account</p>
+      <h1 class="section-title">My profile</h1>
+
+      <div class="profile-grid">
+
+        <!-- Details card -->
+        <div class="profile-card">
+          <div class="profile-card-title">Designer details</div>
+          <div class="profile-field">
+            <span class="profile-field-label">Name</span>
+            <span class="profile-field-value" id="prof-name">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="profile-field-label">Studio</span>
+            <span class="profile-field-value" id="prof-studio">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="profile-field-label">City</span>
+            <span class="profile-field-value" id="prof-city">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="profile-field-label">WhatsApp</span>
+            <span class="profile-field-value" id="prof-whatsapp">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="profile-field-label">Email</span>
+            <span class="profile-field-value" id="prof-email">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="profile-field-label">Work type</span>
+            <span class="profile-field-value" id="prof-worktype">—</span>
+          </div>
+          <div class="profile-field">
+            <span class="profile-field-label">Member since</span>
+            <span class="profile-field-value" id="prof-since">—</span>
+          </div>
+          <div class="member-id-block">
+            <div>
+              <div class="mid-label">Member ID</div>
+              <div class="mid-value" id="prof-member-id">—</div>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--olive-light)" stroke-width="1.5">
+              <rect x="3" y="5" width="14" height="11" rx="2"/>
+              <path d="M7 9h6M7 12h4" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Certificate card -->
+        <div class="profile-card">
+          <div class="profile-card-title">Your WV credential</div>
+
+          <div class="cert-locked" id="cert-locked">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="8" y="16" width="24" height="18" rx="2"/>
+              <path d="M14 16v-4a6 6 0 0112 0v4" stroke-linecap="round"/>
+              <circle cx="20" cy="26" r="3"/>
+            </svg>
+            <h3>Certificate locked</h3>
+            <p>Your WV Verified Designer Partner certificate will be issued after your first purchase. Real proof you can show clients.</p>
+          </div>
+
+          <div class="cert-unlocked" id="cert-unlocked">
+            <div class="cert-preview" id="cert-preview">
+              <div class="cert-logo">WV</div>
+              <hr class="cert-rule" />
+              <div class="cert-label">Designer Partner Certificate</div>
+              <div class="cert-name" id="cert-name">—</div>
+              <div class="cert-studio" id="cert-studio">—</div>
+              <div class="cert-body">
+                is a verified partner of Weaving Vibes<br />
+                and a member of the WV Launch Program.
+              </div>
+              <div class="cert-footer">
+                <span id="cert-since">—</span>
+                <span id="cert-id" style="font-family: var(--mono); font-size: 11px;">—</span>
+              </div>
+            </div>
+            <button class="btn-download-cert" onclick="downloadCertificate()">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M8 2v9M5 8l3 3 3-3M3 14h10" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Download certificate
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <!-- ── Fabric request modal ──────────────────────────────── -->
+  <div class="modal-overlay" id="request-modal" onclick="closeModal(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Request this fabric</div>
+        </div>
+        <button class="modal-close" onclick="closeRequestModal()">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 4l10 10M14 4L4 14" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-fabric-name">Fabric: <strong id="modal-fabric-name">—</strong></div>
+        <div class="form-error" id="modal-error"></div>
+        <div id="modal-form">
+          <div class="field-row">
+            <div class="field">
+              <label for="req-qty">Quantity needed (metres)</label>
+              <input type="number" id="req-qty" placeholder="e.g. 50" min="1" />
+            </div>
+            <div class="field">
+              <label for="req-timeline">Timeline</label>
+              <div class="select-wrap">
+                <select id="req-timeline">
+                  <option value="" disabled selected>Select</option>
+                  <option value="Within 2 weeks">Within 2 weeks</option>
+                  <option value="Within 1 month">Within 1 month</option>
+                  <option value="1–3 months">1–3 months</option>
+                  <option value="Flexible">Flexible</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="field">
+            <label for="req-notes">Notes (optional)</label>
+            <textarea id="req-notes" placeholder="Any specific requirements, delivery address, or questions…" style="min-height: 72px;"></textarea>
+          </div>
+          <button class="btn-submit" id="btn-modal-submit" onclick="submitFabricRequest()">
+            <span class="btn-text">Send request</span>
+            <div class="spinner"></div>
+          </button>
+          <p class="form-note">We'll reach out within 48 hours on WhatsApp and email.</p>
+        </div>
+        <div class="modal-success" id="modal-success">
+          <div class="success-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="var(--olive)" stroke-width="1.5">
+              <path d="M4 11l5 5 9-9" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Request sent.</h3>
+          <p>We'll reach out within 48 hours. Keep an eye on your WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer>
+    // ── Config ────────────────────────────────────────────────
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyJpniIY4dlSSHww7y5RvHVafPbTnpWl9wiQkBOGHNS0Dqra0XvhOx6xtEUL5dI7DJ8/exec";
+    const SECRET  = "wv_launch_launch_2026";
+
+    // ── State ─────────────────────────────────────────────────
+    let designer = null;
+    let currentFabric = null;
+    let visitType = "studio";
+
+    // ── Session check ─────────────────────────────────────────
+    function loadSession() {
+      const raw = localStorage.getItem("wv_designer");
+      if (!raw) { window.location.href = "signup.html"; return; }
+      try {
+        designer = JSON.parse(raw);
+        if (!designer || !designer.email) { window.location.href = "signup.html"; return; }
+      } catch (e) { window.location.href = "signup.html"; return; }
+    }
+
+    function signOut() {
+      localStorage.removeItem("wv_designer");
+      window.location.href = "index.html";
+    }
+
+    // ── GAS call ──────────────────────────────────────────────
+    async function callGAS(payload) {
+      const res = await fetch(GAS_URL, {
+        method: "POST",
+        redirect: "follow",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ ...payload, secret: SECRET })
+      });
+      return res.json();
+    }
+
+    // ── Tab switching ─────────────────────────────────────────
+    function switchTab(tab) {
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".nav-tab").forEach(t => t.classList.remove("active"));
+      document.getElementById("panel-" + tab).classList.add("active");
+      const tabs = ["drops","visit","ideas","profile"];
+      document.querySelectorAll(".nav-tab")[tabs.indexOf(tab)].classList.add("active");
+      closeDropdown();
+    }
+
+    // ── Member dropdown ───────────────────────────────────────
+    function toggleDropdown() {
+      document.getElementById("nav-dropdown").classList.toggle("open");
+    }
+    function closeDropdown() {
+      document.getElementById("nav-dropdown").classList.remove("open");
+    }
+    document.addEventListener("click", (e) => {
+      if (!document.querySelector(".nav-member").contains(e.target)) closeDropdown();
+    });
+
+    // ── Populate nav + profile ────────────────────────────────
+    function populateUI() {
+      // Nav
+      const firstName = designer.name ? designer.name.split(" ")[0] : "Member";
+      document.getElementById("nav-member-name").textContent = "Hi, " + firstName;
+      document.getElementById("dropdown-member-id").textContent = designer.memberId || "—";
+
+      // Profile tab
+      document.getElementById("prof-name").textContent = designer.name || "—";
+      document.getElementById("prof-studio").textContent = designer.studio || "—";
+      document.getElementById("prof-city").textContent = designer.city || "—";
+      document.getElementById("prof-whatsapp").textContent = designer.whatsapp || "—";
+      document.getElementById("prof-email").textContent = designer.email || "—";
+      document.getElementById("prof-worktype").textContent = designer.workType || "—";
+      document.getElementById("prof-since").textContent = formatDate(designer.joinedDate);
+      document.getElementById("prof-member-id").textContent = designer.memberId || "—";
+
+      // Certificate
+      if (designer.purchaseCount && parseInt(designer.purchaseCount) > 0) {
+        document.getElementById("cert-locked").style.display = "none";
+        document.getElementById("cert-unlocked").style.display = "block";
+        document.getElementById("cert-name").textContent = (designer.name || "").toUpperCase();
+        document.getElementById("cert-studio").textContent = designer.studio || "";
+        document.getElementById("cert-since").textContent = "Member since " + formatDate(designer.joinedDate);
+        document.getElementById("cert-id").textContent = designer.memberId || "";
+      }
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return "—";
+      try {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString("en-IN", { month: "long", year: "numeric" });
+      } catch (e) { return dateStr; }
+    }
+
+    // ── Load fabric drops ─────────────────────────────────────
+    async function loadDrops() {
+      try {
+        const res = await callGAS({ action: "getFabricDrops" });
+        document.getElementById("drops-shimmer").remove();
+
+        if (res.status !== "success" || !res.data || res.data.length === 0) {
+          document.getElementById("drops-container").innerHTML = `
+            <div class="empty-state">
+              <svg class="empty-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="8" y="12" width="32" height="28" rx="2"/>
+                <path d="M16 12V10a8 8 0 0116 0v2" stroke-linecap="round"/>
+                <path d="M20 26l3 3 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3>New fabrics are on their way.</h3>
+              <p>We'll notify you when the first drop is live. Check back soon.</p>
+            </div>`;
+          return;
+        }
+
+        const grid = document.createElement("div");
+        grid.className = "fabric-grid";
+
+        res.data.forEach(fabric => {
+          const pct = fabric.stockPercent || 0;
+          const isLow = pct < 20;
+          const card = document.createElement("div");
+          card.className = "fabric-card";
+          card.innerHTML = `
+            <div class="fabric-img-wrap">
+              ${fabric.imageUrl
+                ? `<img src="${fabric.imageUrl}" alt="${fabric.name}" loading="lazy" />`
+                : `<div class="fabric-img-placeholder">WV</div>`
+              }
+              <span class="members-badge">Members only</span>
+              ${isLow ? `<span class="almost-gone-badge">Almost gone</span>` : ""}
+            </div>
+            <div class="fabric-body">
+              <div class="fabric-name">${fabric.name}</div>
+              <div class="fabric-desc">${fabric.description || ""}</div>
+              <div class="fabric-price">₹ ${Number(fabric.pricePerMetre).toLocaleString("en-IN")} / m <span>· Members only</span></div>
+              <div class="stock-label">${Number(fabric.currentStock).toLocaleString("en-IN")} m of ${Number(fabric.totalStock).toLocaleString("en-IN")} m remaining</div>
+              <div class="stock-bar-track">
+                <div class="stock-bar-fill ${isLow ? "low" : ""}" style="width: ${Math.max(pct, 2)}%"></div>
+              </div>
+              <button class="btn-request" onclick='openRequestModal(${JSON.stringify(fabric)})'>
+                Request this fabric
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M2 7h10M8 3l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>`;
+          grid.appendChild(card);
+        });
+
+        document.getElementById("drops-container").appendChild(grid);
+      } catch (err) {
+        document.getElementById("drops-container").innerHTML = `
+          <div class="empty-state">
+            <h3>Couldn't load fabrics.</h3>
+            <p>Check your connection and refresh the page.</p>
+          </div>`;
+      }
+    }
+
+    // ── Fabric request modal ──────────────────────────────────
+    function openRequestModal(fabric) {
+      currentFabric = fabric;
+      document.getElementById("modal-fabric-name").textContent = fabric.name;
+      document.getElementById("modal-form").style.display = "block";
+      document.getElementById("modal-success").style.display = "none";
+      document.getElementById("modal-error").classList.remove("show");
+      document.getElementById("req-qty").value = "";
+      document.getElementById("req-timeline").value = "";
+      document.getElementById("req-notes").value = "";
+      document.getElementById("request-modal").classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeRequestModal() {
+      document.getElementById("request-modal").classList.remove("open");
+      document.body.style.overflow = "";
+      currentFabric = null;
+    }
+
+    function closeModal(e) {
+      if (e.target === document.getElementById("request-modal")) closeRequestModal();
+    }
+
+    async function submitFabricRequest() {
+      const qty = document.getElementById("req-qty").value.trim();
+      const timeline = document.getElementById("req-timeline").value;
+      const notes = document.getElementById("req-notes").value.trim();
+      const errEl = document.getElementById("modal-error");
+      errEl.classList.remove("show");
+
+      if (!qty || parseInt(qty) < 1) { errEl.textContent = "Please enter the quantity needed."; errEl.classList.add("show"); return; }
+      if (!timeline) { errEl.textContent = "Please select a timeline."; errEl.classList.add("show"); return; }
+
+      const btn = document.getElementById("btn-modal-submit");
+      btn.disabled = true; btn.classList.add("loading");
+
+      try {
+        const res = await callGAS({
+          action: "requestFabric",
+          designerEmail: designer.email,
+          designerName: designer.name,
+          fabricId: currentFabric.fabricId,
+          fabricName: currentFabric.name,
+          quantityNeeded: qty + "m",
+          notes: notes + (timeline ? " | Timeline: " + timeline : "")
+        });
+
+        if (res.status === "success") {
+          document.getElementById("modal-form").style.display = "none";
+          document.getElementById("modal-success").style.display = "block";
+        } else {
+          errEl.textContent = res.message || "Something went wrong. Please try again.";
+          errEl.classList.add("show");
+        }
+      } catch (err) {
+        errEl.textContent = "Connection error. Please try again.";
+        errEl.classList.add("show");
+      }
+
+      btn.disabled = false; btn.classList.remove("loading");
+    }
+
+    // ── Visit booking ─────────────────────────────────────────
+    function selectVisitType(type) {
+      visitType = type;
+      document.getElementById("visit-studio-card").classList.toggle("selected", type === "studio");
+      document.getElementById("visit-video-card").classList.toggle("selected", type === "video");
+      document.getElementById("visit-form-title").textContent =
+        type === "studio" ? "Studio visit details" : "Video meeting details";
+    }
+
+    async function bookVisit() {
+      const date = document.getElementById("visit-date").value;
+      const time = document.getElementById("visit-time").value;
+      const notes = document.getElementById("visit-notes").value.trim();
+      const errEl = document.getElementById("visit-error");
+      errEl.classList.remove("show");
+
+      if (!date) { errEl.textContent = "Please select a date."; errEl.classList.add("show"); return; }
+      if (!time) { errEl.textContent = "Please select a time slot."; errEl.classList.add("show"); return; }
+
+      const btn = document.getElementById("btn-book-visit");
+      btn.disabled = true; btn.classList.add("loading");
+
+      try {
+        const res = await callGAS({
+          action: "bookAppointment",
+          designerEmail: designer.email,
+          designerName: designer.name,
+          type: visitType === "studio" ? "Studio Visit" : "Video Meeting",
+          date,
+          timeSlot: time,
+          notes
+        });
+
+        if (res.status === "success") {
+          document.getElementById("visit-form").style.display = "none";
+          const conf = document.getElementById("visit-confirmation");
+          conf.classList.add("show");
+          const formattedDate = new Date(date).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
+          document.getElementById("visit-confirmation-msg").textContent =
+            `Your ${visitType === "studio" ? "studio visit" : "video meeting"} is booked for ${formattedDate} at ${time}. We'll send details to ${designer.email}.`;
+        } else {
+          errEl.textContent = res.message || "Booking failed. Please try again.";
+          errEl.classList.add("show");
+        }
+      } catch (err) {
+        errEl.textContent = "Connection error. Please try again.";
+        errEl.classList.add("show");
+      }
+
+      btn.disabled = false; btn.classList.remove("loading");
+    }
+
+    // ── Chip toggle ───────────────────────────────────────────
+    function toggleChip(el, groupId) {
+      el.classList.toggle("selected");
+    }
+
+    function getSelectedChips(groupId) {
+      return Array.from(document.querySelectorAll(`#${groupId} .chip.selected`))
+        .map(c => c.dataset.value).join(", ");
+    }
+
+    // ── Season brief ──────────────────────────────────────────
+    async function submitBrief() {
+      const collection = document.getElementById("brief-collection").value.trim();
+      const season = document.getElementById("brief-season").value;
+      const mood = document.getElementById("brief-mood").value.trim();
+      const errEl = document.getElementById("brief-error");
+      errEl.classList.remove("show");
+
+      if (!collection) { errEl.textContent = "Please enter your collection name."; errEl.classList.add("show"); return; }
+      if (!mood) { errEl.textContent = "Please describe the mood and direction."; errEl.classList.add("show"); return; }
+
+      const btn = document.getElementById("btn-brief");
+      btn.disabled = true; btn.classList.add("loading");
+
+      try {
+        const res = await callGAS({
+          action: "submitSeasonBrief",
+          designerEmail: designer.email,
+          designerName: designer.name,
+          collectionName: collection,
+          seasonType: season,
+          whatMaking: getSelectedChips("making-chips"),
+          moodDescription: mood,
+          budgetRange: document.getElementById("brief-budget").value,
+          imageUrls: ""
+        });
+
+        if (res.status === "success") {
+          document.getElementById("brief-form").style.display = "none";
+          document.getElementById("brief-success").style.display = "block";
+        } else {
+          errEl.textContent = res.message || "Something went wrong. Please try again.";
+          errEl.classList.add("show");
+        }
+      } catch (err) {
+        errEl.textContent = "Connection error. Please try again.";
+        errEl.classList.add("show");
+      }
+
+      btn.disabled = false; btn.classList.remove("loading");
+    }
+
+    // ── Custom fabric ─────────────────────────────────────────
+    async function submitCustom() {
+      const fibre = getSelectedChips("fibre-chips");
+      const texture = document.getElementById("custom-texture").value.trim();
+      const qty = document.getElementById("custom-qty").value;
+      const errEl = document.getElementById("custom-error");
+      errEl.classList.remove("show");
+
+      if (!fibre) { errEl.textContent = "Please select at least one fibre preference."; errEl.classList.add("show"); return; }
+
+      const btn = document.getElementById("btn-custom");
+      btn.disabled = true; btn.classList.add("loading");
+
+      try {
+        const res = await callGAS({
+          action: "submitCustomFabric",
+          designerEmail: designer.email,
+          designerName: designer.name,
+          fibrePreference: fibre,
+          gsmRange: getSelectedChips("gsm-chips"),
+          width: getSelectedChips("width-chips"),
+          textureNotes: texture,
+          quantityNeeded: qty,
+          timeline: document.getElementById("custom-timeline").value
+        });
+
+        if (res.status === "success") {
+          document.getElementById("custom-form").style.display = "none";
+          document.getElementById("custom-success").style.display = "block";
+        } else {
+          errEl.textContent = res.message || "Something went wrong. Please try again.";
+          errEl.classList.add("show");
+        }
+      } catch (err) {
+        errEl.textContent = "Connection error. Please try again.";
+        errEl.classList.add("show");
+      }
+
+      btn.disabled = false; btn.classList.remove("loading");
+    }
+
+    // ── Certificate download (jsPDF) ──────────────────────────
+    async function downloadCertificate() {
+      // Load jsPDF on demand
+      if (!window.jspdf) {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+          s.onload = resolve; s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      }
+
+      const { jsPDF } = window.jspdf;
+      // A5 landscape: 210 x 148 mm
+      const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a5" });
+      const W = 210, H = 148;
+
+      // Background
+      doc.setFillColor(248, 245, 240);
+      doc.rect(0, 0, W, H, "F");
+
+      // Outer border
+      doc.setDrawColor(214, 223, 200);
+      doc.setLineWidth(0.5);
+      doc.rect(6, 6, W - 12, H - 12);
+
+      // Inner border
+      doc.setLineWidth(0.3);
+      doc.rect(9, 9, W - 18, H - 18);
+
+      // WV Logo text
+      doc.setFont("times", "italic");
+      doc.setFontSize(28);
+      doc.setTextColor(74, 86, 54);
+      doc.text("WV", 20, 30);
+
+      // Member ID top right
+      doc.setFont("courier", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(122, 122, 114);
+      doc.text(designer.memberId || "", W - 20, 22, { align: "right" });
+
+      // Horizontal rule
+      doc.setDrawColor(214, 223, 200);
+      doc.setLineWidth(0.3);
+      doc.line(20, 40, W - 20, 40);
+
+      // Certificate label
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(107, 124, 78);
+      doc.setCharSpace(2);
+      doc.text("DESIGNER PARTNER CERTIFICATE", W / 2, 52, { align: "center" });
+      doc.setCharSpace(0);
+
+      // This certifies
+      doc.setFont("times", "italic");
+      doc.setFontSize(11);
+      doc.setTextColor(122, 122, 114);
+      doc.text("This certifies that", W / 2, 64, { align: "center" });
+
+      // Designer name
+      doc.setFont("times", "bold");
+      doc.setFontSize(22);
+      doc.setTextColor(44, 44, 42);
+      doc.text((designer.name || "").toUpperCase(), W / 2, 78, { align: "center" });
+
+      // Studio
+      doc.setFont("times", "normal");
+      doc.setFontSize(12);
+      doc.setTextColor(122, 122, 114);
+      doc.text(designer.studio || "", W / 2, 87, { align: "center" });
+
+      // Body
+      doc.setFont("times", "italic");
+      doc.setFontSize(11);
+      doc.setTextColor(44, 44, 42);
+      doc.text("is a verified partner of Weaving Vibes", W / 2, 100, { align: "center" });
+      doc.text("and a member of the WV Launch Program", W / 2, 108, { align: "center" });
+      doc.text("since " + formatDate(designer.joinedDate) + ".", W / 2, 116, { align: "center" });
+
+      // Bottom rule
+      doc.setDrawColor(214, 223, 200);
+      doc.line(20, 125, W - 20, 125);
+
+      // Footer
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(122, 122, 114);
+      doc.text("Founder, Weaving Vibes", 24, 136);
+      doc.text("weavingvibes.com", W / 2, 136, { align: "center" });
+      doc.text(new Date().getFullYear().toString(), W - 24, 136, { align: "right" });
+
+      doc.save("WV-Certificate-" + (designer.memberId || "member") + ".pdf");
+    }
+
+    // ── Init ──────────────────────────────────────────────────
+    loadSession();
+    populateUI();
+    loadDrops();
+
+    // Set min date for visit booking to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById("visit-date").min = tomorrow.toISOString().split("T")[0];
+  </script>
+
+</body>
+</html>

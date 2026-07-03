@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin · WV Launch Program</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ── Tokens — matches index/signup/portal ─────────────── */
+    :root {
+      --cream:       #F8F5F0;
+      --white:       #FFFFFF;
+      --olive:       #6B7C4E;
+      --olive-dark:  #4A5636;
+      --olive-light: #D6DFC8;
+      --olive-faint: #EEF2E8;
+      --charcoal:    #2C2C2A;
+      --muted:       #7A7A72;
+      --border:      #E2DDD6;
+      --amber:       #C8843A;
+      --red:         #B84040;
+      --error-bg:    #FAF0F0;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+      --mono:        'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--sans); }
+
+    /* ════════════════════════════════════════════════════════
+       LOGIN SCREEN
+       ════════════════════════════════════════════════════════ */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 48px 40px;
+    }
+    .login-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .login-heading {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--charcoal);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .login-sub {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .field input {
+      width: 100%;
+      padding: 13px 16px;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .field input:focus { border-color: var(--olive); background: var(--white); }
+    .field input.error { border-color: var(--red); }
+
+    .form-error-banner {
+      background: var(--error-bg);
+      border: 1px solid #EDCBCB;
+      border-radius: 2px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--red);
+      margin-bottom: 20px;
+      display: none;
+      line-height: 1.5;
+    }
+    .form-error-banner.show { display: block; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--olive);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--olive-dark); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-submit .spinner {
+      width: 15px; height: 15px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: 0.7; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* OTP step */
+    #otp-step { display: none; }
+    .otp-email-display {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .otp-email-display strong { color: var(--charcoal); font-weight: 500; }
+
+    .otp-boxes {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .otp-box {
+      width: 46px;
+      height: 54px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 22px;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      caret-color: var(--olive);
+    }
+    .otp-box:focus { border-color: var(--olive); background: var(--white); }
+    .otp-box.error { border-color: var(--red); }
+
+    .otp-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .resend-btn {
+      background: none; border: none;
+      font-size: 13px; color: var(--olive);
+      cursor: pointer; text-decoration: underline;
+      text-underline-offset: 3px; padding: 0;
+      font-family: var(--sans);
+      display: none;
+    }
+    .resend-btn.show { display: inline; }
+    .resend-countdown { color: var(--muted); }
+    .change-email-btn {
+      background: none; border: none;
+      font-size: 13px; color: var(--muted);
+      cursor: pointer; padding: 0;
+      text-decoration: underline; text-underline-offset: 3px;
+      font-family: var(--sans);
+    }
+    .change-email-btn:hover { color: var(--charcoal); }
+
+    /* ════════════════════════════════════════════════════════
+       DASHBOARD
+       ════════════════════════════════════════════════════════ */
+    #dashboard { display: none; }
+
+    nav.admin-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .admin-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .admin-badge {
+      font-family: var(--serif);
+      font-size: 20px;
+      color: var(--olive-dark);
+    }
+    .admin-badge-tag {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--olive);
+      color: var(--white);
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    .admin-email-pill {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .btn-signout {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--red);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-signout:hover { background: var(--error-bg); }
+
+    .admin-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      padding: 0 32px;
+      overflow-x: auto;
+    }
+    .admin-tab {
+      padding: 14px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .admin-tab:hover { color: var(--charcoal); }
+    .admin-tab.active { color: var(--charcoal); border-bottom-color: var(--olive); }
+
+    .admin-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+    .admin-panel { display: none; }
+    .admin-panel.active { display: block; }
+
+    .panel-title {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .panel-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* Cards / forms */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field textarea, .field select {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .field textarea:focus, .field select:focus { border-color: var(--olive); background: var(--white); }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .btn-primary-sm {
+      padding: 11px 22px;
+      background: var(--olive);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    .btn-primary-sm:hover:not(:disabled) { background: var(--olive-dark); }
+    .btn-primary-sm:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    table.data-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    table.data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--charcoal);
+      vertical-align: top;
+    }
+    table.data-table tr:last-child td { border-bottom: none; }
+    table.data-table tr:hover td { background: var(--cream); }
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .pill-pending { background: var(--error-bg); color: var(--red); }
+    .pill-progress { background: #FCF3E6; color: var(--amber); }
+    .pill-done { background: var(--olive-faint); color: var(--olive-dark); }
+    select.status-select {
+      font-size: 12px;
+      padding: 5px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: var(--white);
+      color: var(--charcoal);
+      cursor: pointer;
+    }
+    .empty-row td {
+      text-align: center;
+      color: var(--muted);
+      padding: 40px;
+      font-style: italic;
+    }
+    .stock-input {
+      width: 80px;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 13px;
+    }
+    .toggle-switch {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      background: var(--border);
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .toggle-switch.on { background: var(--olive); }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: white;
+      transition: left 0.2s;
+    }
+    .toggle-switch.on::after { left: 18px; }
+
+    .shimmer-row {
+      height: 44px;
+      background: linear-gradient(90deg, var(--border) 25%, var(--olive-faint) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s ease-in-out infinite;
+      margin-bottom: 8px;
+      border-radius: 2px;
+    }
+    @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--olive-dark);
+      color: var(--white);
+      padding: 14px 22px;
+      border-radius: 2px;
+      font-size: 13px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error-toast { background: var(--red); }
+
+    @media (max-width: 700px) {
+      .field-row { grid-template-columns: 1fr; }
+      .admin-page { padding: 24px 16px 60px; }
+      nav.admin-nav { padding: 0 16px; }
+      .admin-tabs { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       LOGIN SCREEN — email + OTP, no signup, no nav link in
+       (admin.html is reached only by typing the URL directly)
+       ════════════════════════════════════════════════════════ -->
+  <div id="login-screen">
+    <div class="login-box">
+
+      <!-- Step: email -->
+      <div id="email-step">
+        <p class="login-eyebrow">WV Launch Program</p>
+        <h1 class="login-heading">Admin</h1>
+        <p class="login-sub">Enter your admin email. We'll send a one-time code.</p>
+
+        <div class="form-error-banner" id="email-error"></div>
+
+        <div class="field">
+          <label for="admin-email">Email address</label>
+          <input type="email" id="admin-email" placeholder="you@weavingvibes.com" autocomplete="email" />
+        </div>
+
+        <button class="btn-submit" id="btn-send-code" onclick="sendAdminCode()">
+          <span class="btn-text">Send code</span>
+          <div class="spinner"></div>
+        </button>
+      </div>
+
+      <!-- Step: OTP -->
+      <div id="otp-step">
+        <p class="login-eyebrow">WV Launch Program</p>
+        <h1 class="login-heading">Enter code</h1>
+        <p class="otp-email-display">
+          We sent a 6-digit code to<br />
+          <strong id="otp-email-display"></strong>
+        </p>
+
+        <div class="form-error-banner" id="otp-error"></div>
+
+        <div class="otp-boxes">
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="aotp-0" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="aotp-1" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="aotp-2" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="aotp-3" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="aotp-4" />
+          <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="aotp-5" />
+        </div>
+
+        <div class="otp-actions">
+          <span>
+            <span class="resend-countdown" id="resend-countdown">Resend in <strong id="countdown-num">30</strong>s</span>
+            <button class="resend-btn" id="resend-btn" onclick="resendAdminCode()">Resend code</button>
+          </span>
+          <button class="change-email-btn" onclick="backToEmailStep()">Change email</button>
+        </div>
+
+        <button class="btn-submit" id="btn-verify-code" onclick="verifyAdminCode()">
+          <span class="btn-text">Verify & enter</span>
+          <div class="spinner"></div>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       DASHBOARD
+       ════════════════════════════════════════════════════════ -->
+  <div id="dashboard">
+
+    <nav class="admin-nav">
+      <div class="admin-nav-left">
+        <span class="admin-badge">WV</span>
+        <span class="admin-badge-tag">Admin</span>
+        <span class="admin-email-pill" id="admin-email-display"></span>
+      </div>
+      <button class="btn-signout" onclick="adminSignOut()">Sign out</button>
+    </nav>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('fabrics')">Fabrics</button>
+      <button class="admin-tab" onclick="switchAdminTab('designers')">Designers</button>
+      <button class="admin-tab" onclick="switchAdminTab('appointments')">Appointments</button>
+      <button class="admin-tab" onclick="switchAdminTab('briefs')">Season briefs</button>
+      <button class="admin-tab" onclick="switchAdminTab('custom')">Custom fabric</button>
+      <button class="admin-tab" onclick="switchAdminTab('requests')">Fabric requests</button>
+    </div>
+
+    <div class="admin-page">
+
+      <!-- ── Fabrics ─────────────────────────────────────── -->
+      <div class="admin-panel active" id="panel-fabrics">
+        <h1 class="panel-title">Fabric drops</h1>
+        <p class="panel-sub">Post new fabrics and manage stock visible to designers.</p>
+
+        <div class="card">
+          <div class="card-title">Post a new fabric</div>
+          <div class="form-error-banner" id="post-fabric-error"></div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-name">Fabric name</label>
+              <input type="text" id="f-name" placeholder="e.g. Jamaica" />
+            </div>
+            <div class="field">
+              <label for="f-price">Price per metre (₹)</label>
+              <input type="number" id="f-price" placeholder="480" min="0" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-stock">Total stock (metres)</label>
+              <input type="number" id="f-stock" placeholder="1000" min="1" />
+            </div>
+            <div class="field">
+              <label for="f-image">Image URL (Cloudinary)</label>
+              <input type="text" id="f-image" placeholder="https://res.cloudinary.com/..." />
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-desc">Description</label>
+            <textarea id="f-desc" placeholder="Hand, feel, suggested use…"></textarea>
+          </div>
+          <button class="btn-primary-sm" id="btn-post-fabric" onclick="postFabric()">Post fabric</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Manage stock</div>
+          <div class="table-wrap">
+            <table class="data-table" id="fabrics-table">
+              <thead>
+                <tr>
+                  <th>Fabric</th><th>Price/m</th><th>Total stock</th><th>Current stock</th><th>Active</th>
+                </tr>
+              </thead>
+              <tbody id="fabrics-tbody">
+                <tr><td colspan="5"><div class="shimmer-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Designers ───────────────────────────────────── -->
+      <div class="admin-panel" id="panel-designers">
+        <h1 class="panel-title">Designers</h1>
+        <p class="panel-sub">All signed-up members.</p>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data-table" id="designers-table">
+              <thead>
+                <tr>
+                  <th>Member ID</th><th>Name</th><th>Studio</th><th>City</th><th>WhatsApp</th><th>Email</th><th>Work type</th><th>Joined</th><th>Purchases</th>
+                </tr>
+              </thead>
+              <tbody id="designers-tbody">
+                <tr><td colspan="9"><div class="shimmer-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Appointments ────────────────────────────────── -->
+      <div class="admin-panel" id="panel-appointments">
+        <h1 class="panel-title">Appointments</h1>
+        <p class="panel-sub">Studio visits and video meeting requests.</p>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data-table" id="appointments-table">
+              <thead>
+                <tr>
+                  <th>Designer</th><th>Type</th><th>Date</th><th>Time</th><th>Notes</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="appointments-tbody">
+                <tr><td colspan="6"><div class="shimmer-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Season briefs ───────────────────────────────── -->
+      <div class="admin-panel" id="panel-briefs">
+        <h1 class="panel-title">Season briefs</h1>
+        <p class="panel-sub">Collection ideas designers have shared.</p>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data-table" id="briefs-table">
+              <thead>
+                <tr>
+                  <th>Designer</th><th>Collection</th><th>Season</th><th>Making</th><th>Mood</th><th>Budget</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="briefs-tbody">
+                <tr><td colspan="7"><div class="shimmer-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Custom fabric ────────────────────────────────── -->
+      <div class="admin-panel" id="panel-custom">
+        <h1 class="panel-title">Custom fabric requests</h1>
+        <p class="panel-sub">Fabric development requests from scratch.</p>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data-table" id="custom-table">
+              <thead>
+                <tr>
+                  <th>Designer</th><th>Fibre</th><th>GSM</th><th>Width</th><th>Texture</th><th>Qty</th><th>Timeline</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="custom-tbody">
+                <tr><td colspan="8"><div class="shimmer-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Fabric requests ─────────────────────────────── -->
+      <div class="admin-panel" id="panel-requests">
+        <h1 class="panel-title">Fabric requests</h1>
+        <p class="panel-sub">Designer requests for specific fabric drops.</p>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="data-table" id="requests-table">
+              <thead>
+                <tr>
+                  <th>Designer</th><th>Fabric</th><th>Quantity</th><th>Notes</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="requests-tbody">
+                <tr><td colspan="5"><div class="shimmer-row"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script defer>
+    // ── Config ────────────────────────────────────────────────
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyJpniIY4dlSSHww7y5RvHVafPbTnpWl9wiQkBOGHNS0Dqra0XvhOx6xtEUL5dI7DJ8/exec";
+    const SECRET  = "wv_launch_launch_2026";
+    const SESSION_KEY = "wv_admin"; // deliberately different key from "wv_designer"
+
+    let currentEmail = "";
+    let countdownTimer = null;
+    let admin = null;
+
+    // ── GAS call ──────────────────────────────────────────────
+    async function callGAS(payload) {
+      const res = await fetch(GAS_URL, {
+        method: "POST",
+        redirect: "follow",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ ...payload, secret: SECRET })
+      });
+      return res.json();
+    }
+
+    function toast(msg, isError) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.toggle("error-toast", !!isError);
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 3200);
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      btn.disabled = loading;
+      btn.classList.toggle("loading", loading);
+    }
+
+    function showError(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.classList.add("show");
+    }
+    function hideError(id) { document.getElementById(id).classList.remove("show"); }
+
+    // ════════════════════════════════════════════════════════
+    // LOGIN FLOW
+    // ════════════════════════════════════════════════════════
+
+    async function sendAdminCode() {
+      hideError("email-error");
+      const email = document.getElementById("admin-email").value.trim().toLowerCase();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById("admin-email").classList.add("error");
+        showError("email-error", "Please enter a valid email.");
+        return;
+      }
+      document.getElementById("admin-email").classList.remove("error");
+      currentEmail = email;
+      setLoading("btn-send-code", true);
+
+      try {
+        const res = await callGAS({ action: "sendOTP", email: currentEmail });
+        if (res.status === "success") {
+          document.getElementById("otp-email-display").textContent = currentEmail;
+          document.getElementById("email-step").style.display = "none";
+          document.getElementById("otp-step").style.display = "block";
+          startCountdown();
+          setTimeout(() => document.getElementById("aotp-0").focus(), 100);
+        } else {
+          showError("email-error", res.message || "Something went wrong. Please try again.");
+        }
+      } catch (err) {
+        showError("email-error", "Connection error. Please check your internet and try again.");
+      }
+      setLoading("btn-send-code", false);
+    }
+
+    async function resendAdminCode() {
+      document.getElementById("resend-btn").classList.remove("show");
+      document.getElementById("resend-countdown").style.display = "inline";
+      hideError("otp-error");
+      try {
+        await callGAS({ action: "sendOTP", email: currentEmail });
+        startCountdown();
+        for (let i = 0; i < 6; i++) {
+          const box = document.getElementById("aotp-" + i);
+          box.value = "";
+          box.classList.remove("error");
+        }
+        document.getElementById("aotp-0").focus();
+      } catch (err) {
+        showError("otp-error", "Could not resend. Please try again.");
+      }
+    }
+
+    function startCountdown() {
+      let secs = 30;
+      document.getElementById("countdown-num").textContent = secs;
+      document.getElementById("resend-countdown").style.display = "inline";
+      document.getElementById("resend-btn").classList.remove("show");
+      clearInterval(countdownTimer);
+      countdownTimer = setInterval(() => {
+        secs--;
+        document.getElementById("countdown-num").textContent = secs;
+        if (secs <= 0) {
+          clearInterval(countdownTimer);
+          document.getElementById("resend-countdown").style.display = "none";
+          document.getElementById("resend-btn").classList.add("show");
+        }
+      }, 1000);
+    }
+
+    async function verifyAdminCode() {
+      hideError("otp-error");
+      const otp = Array.from({ length: 6 }, (_, i) => document.getElementById("aotp-" + i).value).join("");
+      if (otp.length < 6) {
+        showError("otp-error", "Please enter the full 6-digit code.");
+        return;
+      }
+      setLoading("btn-verify-code", true);
+
+      try {
+        const res = await callGAS({ action: "adminVerifyOTP", email: currentEmail, otp });
+        if (res.status === "success") {
+          admin = res.data.admin;
+          localStorage.setItem(SESSION_KEY, JSON.stringify(admin));
+          clearInterval(countdownTimer);
+          enterDashboard();
+        } else {
+          showError("otp-error", res.message || "Incorrect code. Please try again.");
+          for (let i = 0; i < 6; i++) document.getElementById("aotp-" + i).classList.add("error");
+        }
+      } catch (err) {
+        showError("otp-error", "Connection error. Please try again.");
+      }
+      setLoading("btn-verify-code", false);
+    }
+
+    function backToEmailStep() {
+      clearInterval(countdownTimer);
+      hideError("otp-error");
+      document.getElementById("otp-step").style.display = "none";
+      document.getElementById("email-step").style.display = "block";
+    }
+
+    function setupOTPBoxes() {
+      for (let i = 0; i < 6; i++) {
+        const box = document.getElementById("aotp-" + i);
+        box.addEventListener("input", (e) => {
+          for (let j = 0; j < 6; j++) document.getElementById("aotp-" + j).classList.remove("error");
+          hideError("otp-error");
+          const val = e.target.value.replace(/\D/g, "");
+          e.target.value = val.slice(-1);
+          if (val && i < 5) document.getElementById("aotp-" + (i + 1)).focus();
+          const full = Array.from({ length: 6 }, (_, k) => document.getElementById("aotp-" + k).value).join("");
+          if (full.length === 6) verifyAdminCode();
+        });
+        box.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && !box.value && i > 0) document.getElementById("aotp-" + (i - 1)).focus();
+          if (e.key === "ArrowLeft" && i > 0) document.getElementById("aotp-" + (i - 1)).focus();
+          if (e.key === "ArrowRight" && i < 5) document.getElementById("aotp-" + (i + 1)).focus();
+        });
+        box.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const pasted = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "").slice(0, 6);
+          pasted.split("").forEach((ch, k) => {
+            const target = document.getElementById("aotp-" + k);
+            if (target) target.value = ch;
+          });
+          const lastFilled = Math.min(pasted.length, 5);
+          document.getElementById("aotp-" + lastFilled).focus();
+          if (pasted.length === 6) setTimeout(verifyAdminCode, 100);
+        });
+      }
+    }
+
+    // ════════════════════════════════════════════════════════
+    // SESSION
+    // ════════════════════════════════════════════════════════
+
+    function checkExistingSession() {
+      const raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) return false;
+      try {
+        admin = JSON.parse(raw);
+        if (admin && admin.email) return true;
+      } catch (e) {}
+      localStorage.removeItem(SESSION_KEY);
+      return false;
+    }
+
+    function enterDashboard() {
+      document.getElementById("login-screen").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("admin-email-display").textContent = admin.email;
+      loadAllData();
+    }
+
+    function adminSignOut() {
+      localStorage.removeItem(SESSION_KEY);
+      window.location.reload();
+    }
+
+    // ════════════════════════════════════════════════════════
+    // DASHBOARD — TAB SWITCHING
+    // ════════════════════════════════════════════════════════
+
+    function switchAdminTab(tab) {
+      document.querySelectorAll(".admin-panel").forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".admin-tab").forEach(t => t.classList.remove("active"));
+      document.getElementById("panel-" + tab).classList.add("active");
+      const tabs = ["fabrics", "designers", "appointments", "briefs", "custom", "requests"];
+      document.querySelectorAll(".admin-tab")[tabs.indexOf(tab)].classList.add("active");
+    }
+
+    function statusPill(status) {
+      const s = (status || "Pending");
+      const cls = s === "Done" ? "pill-done" : s === "In Progress" ? "pill-progress" : "pill-pending";
+      return `<span class="pill ${cls}">${s}</span>`;
+    }
+
+    function statusSelect(tab, recordId, currentStatus) {
+      const opts = ["Pending", "In Progress", "Done"];
+      return `<select class="status-select" onchange="updateStatus('${tab}','${recordId}',this.value)">
+        ${opts.map(o => `<option value="${o}" ${o === (currentStatus || "Pending") ? "selected" : ""}>${o}</option>`).join("")}
+      </select>`;
+    }
+
+    async function updateStatus(tab, recordId, status) {
+      try {
+        const res = await callGAS({ action: "adminUpdateStatus", tab, recordId, status });
+        if (res.status === "success") toast("Status updated.");
+        else toast(res.message || "Could not update status.", true);
+      } catch (err) {
+        toast("Connection error.", true);
+      }
+    }
+
+    function esc(str) {
+      if (str === undefined || str === null) return "";
+      return String(str).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+    }
+
+    // ════════════════════════════════════════════════════════
+    // LOAD DATA
+    // ════════════════════════════════════════════════════════
+
+    async function loadAllData() {
+      loadFabrics();
+      loadDesigners();
+      loadAppointments();
+      loadBriefs();
+      loadCustom();
+      loadRequests();
+    }
+
+    async function loadFabrics() {
+      const tbody = document.getElementById("fabrics-tbody");
+      try {
+        const res = await callGAS({ action: "getFabricDrops" });
+        const rows = (res.status === "success" ? res.data : []) || [];
+        if (rows.length === 0) {
+          tbody.innerHTML = `<tr class="empty-row"><td colspan="5">No fabrics posted yet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = rows.map(f => `
+          <tr>
+            <td>${esc(f.name)}</td>
+            <td>₹${esc(f.pricePerMetre)}</td>
+            <td>${esc(f.totalStock)}m</td>
+            <td>
+              <input class="stock-input" type="number" value="${esc(f.currentStock)}" min="0"
+                onchange="updateStock('${esc(f.fabricId)}', this.value)" />
+            </td>
+            <td>
+              <span class="toggle-switch on" onclick="toggleFabric('${esc(f.fabricId)}', this)" title="Active"></span>
+            </td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="5">Couldn't load fabrics.</td></tr>`;
+      }
+    }
+
+    async function postFabric() {
+      hideError("post-fabric-error");
+      const name = document.getElementById("f-name").value.trim();
+      const price = document.getElementById("f-price").value;
+      const stock = document.getElementById("f-stock").value;
+      const image = document.getElementById("f-image").value.trim();
+      const desc = document.getElementById("f-desc").value.trim();
+
+      if (!name || !price || !stock) {
+        showError("post-fabric-error", "Name, price and stock are required.");
+        return;
+      }
+
+      setLoading("btn-post-fabric", true);
+      try {
+        const res = await callGAS({
+          action: "adminPostFabric",
+          name, pricePerMetre: price, totalStock: stock, imageUrl: image, description: desc
+        });
+        if (res.status === "success") {
+          toast("Fabric posted.");
+          document.getElementById("f-name").value = "";
+          document.getElementById("f-price").value = "";
+          document.getElementById("f-stock").value = "";
+          document.getElementById("f-image").value = "";
+          document.getElementById("f-desc").value = "";
+          loadFabrics();
+        } else {
+          showError("post-fabric-error", res.message || "Could not post fabric.");
+        }
+      } catch (err) {
+        showError("post-fabric-error", "Connection error. Please try again.");
+      }
+      setLoading("btn-post-fabric", false);
+    }
+
+    async function updateStock(fabricId, value) {
+      try {
+        const res = await callGAS({ action: "adminUpdateStock", fabricId, currentStock: value });
+        if (res.status === "success") toast("Stock updated.");
+        else toast(res.message || "Could not update stock.", true);
+      } catch (err) {
+        toast("Connection error.", true);
+      }
+    }
+
+    async function toggleFabric(fabricId, el) {
+      const willBeOn = !el.classList.contains("on");
+      try {
+        const res = await callGAS({ action: "adminToggleFabric", fabricId, isActive: willBeOn });
+        if (res.status === "success") {
+          el.classList.toggle("on", willBeOn);
+          toast(willBeOn ? "Fabric is now visible." : "Fabric hidden from designers.");
+        } else {
+          toast(res.message || "Could not update visibility.", true);
+        }
+      } catch (err) {
+        toast("Connection error.", true);
+      }
+    }
+
+    async function loadDesigners() {
+      const tbody = document.getElementById("designers-tbody");
+      try {
+        const res = await callGAS({ action: "adminGetDesigners" });
+        const rows = (res.status === "success" ? res.data : []) || [];
+        if (rows.length === 0) {
+          tbody.innerHTML = `<tr class="empty-row"><td colspan="9">No designers signed up yet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = rows.map(d => `
+          <tr>
+            <td>${esc(d.memberId)}</td>
+            <td>${esc(d.name)}</td>
+            <td>${esc(d.studio)}</td>
+            <td>${esc(d.city)}</td>
+            <td>${esc(d.whatsapp)}</td>
+            <td>${esc(d.email)}</td>
+            <td>${esc(d.workType)}</td>
+            <td>${esc(d.joinedDate)}</td>
+            <td>${esc(d.purchaseCount)}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Couldn't load designers.</td></tr>`;
+      }
+    }
+
+    async function loadAppointments() {
+      const tbody = document.getElementById("appointments-tbody");
+      try {
+        const res = await callGAS({ action: "adminGetAppointments" });
+        const rows = (res.status === "success" ? res.data : []) || [];
+        if (rows.length === 0) {
+          tbody.innerHTML = `<tr class="empty-row"><td colspan="6">No appointments yet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = rows.map(a => `
+          <tr>
+            <td>${esc(a.designerName)}<br><span style="color:var(--muted);font-size:12px;">${esc(a.designerEmail)}</span></td>
+            <td>${esc(a.type)}</td>
+            <td>${esc(a.date)}</td>
+            <td>${esc(a.timeSlot)}</td>
+            <td style="max-width:220px;">${esc(a.notes)}</td>
+            <td>${statusSelect("Appointments", a.bookingId, a.status)}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="6">Couldn't load appointments.</td></tr>`;
+      }
+    }
+
+    async function loadBriefs() {
+      const tbody = document.getElementById("briefs-tbody");
+      try {
+        const res = await callGAS({ action: "adminGetBriefs" });
+        const rows = (res.status === "success" ? res.data : []) || [];
+        if (rows.length === 0) {
+          tbody.innerHTML = `<tr class="empty-row"><td colspan="7">No season briefs yet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = rows.map(b => `
+          <tr>
+            <td>${esc(b.designerName)}<br><span style="color:var(--muted);font-size:12px;">${esc(b.designerEmail)}</span></td>
+            <td>${esc(b.collectionName)}</td>
+            <td>${esc(b.seasonType)}</td>
+            <td>${esc(b.whatMaking)}</td>
+            <td style="max-width:240px;">${esc(b.moodDescription)}</td>
+            <td>${esc(b.budgetRange)}</td>
+            <td>${statusSelect("SeasonBriefs", b.briefId, b.status)}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="7">Couldn't load briefs.</td></tr>`;
+      }
+    }
+
+    async function loadCustom() {
+      const tbody = document.getElementById("custom-tbody");
+      try {
+        const res = await callGAS({ action: "adminGetCustomFabric" });
+        const rows = (res.status === "success" ? res.data : []) || [];
+        if (rows.length === 0) {
+          tbody.innerHTML = `<tr class="empty-row"><td colspan="8">No custom fabric requests yet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = rows.map(c => `
+          <tr>
+            <td>${esc(c.designerName)}<br><span style="color:var(--muted);font-size:12px;">${esc(c.designerEmail)}</span></td>
+            <td>${esc(c.fibrePreference)}</td>
+            <td>${esc(c.gsmRange)}</td>
+            <td>${esc(c.width)}</td>
+            <td style="max-width:200px;">${esc(c.textureNotes)}</td>
+            <td>${esc(c.quantityNeeded)}</td>
+            <td>${esc(c.timeline)}</td>
+            <td>${statusSelect("CustomFabric", c.requestId, c.status)}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="8">Couldn't load custom requests.</td></tr>`;
+      }
+    }
+
+    async function loadRequests() {
+      const tbody = document.getElementById("requests-tbody");
+      try {
+        const res = await callGAS({ action: "adminGetFabricRequests" });
+        const rows = (res.status === "success" ? res.data : []) || [];
+        if (rows.length === 0) {
+          tbody.innerHTML = `<tr class="empty-row"><td colspan="5">No fabric requests yet.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = rows.map(r => `
+          <tr>
+            <td>${esc(r.designerName)}<br><span style="color:var(--muted);font-size:12px;">${esc(r.designerEmail)}</span></td>
+            <td>${esc(r.fabricName)}</td>
+            <td>${esc(r.quantityNeeded)}</td>
+            <td style="max-width:220px;">${esc(r.notes)}</td>
+            <td>${statusSelect("FabricRequests", r.requestId, r.status)}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="5">Couldn't load requests.</td></tr>`;
+      }
+    }
+
+    // ════════════════════════════════════════════════════════
+    // INIT
+    // ════════════════════════════════════════════════════════
+    setupOTPBoxes();
+    if (checkExistingSession()) {
+      enterDashboard();
+    }
+  </script>
+
+</body>
+</html>

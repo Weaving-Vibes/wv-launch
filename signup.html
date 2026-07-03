@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join the Program · WV Launch · Weaving Vibes</title>
+  <meta name="description" content="Join the WV Launch Program. Exclusive fabric access for independent designers." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500&family=DM+Mono&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ── Tokens ───────────────────────────────────────────── */
+    :root {
+      --cream:       #F8F5F0;
+      --white:       #FFFFFF;
+      --olive:       #6B7C4E;
+      --olive-dark:  #4A5636;
+      --olive-light: #D6DFC8;
+      --olive-faint: #EEF2E8;
+      --charcoal:    #2C2C2A;
+      --muted:       #7A7A72;
+      --border:      #E2DDD6;
+      --error:       #B84040;
+      --error-bg:    #FAF0F0;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+      --mono:        'DM Mono', monospace;
+    }
+
+    /* ── Reset ────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ──────────────────────────────────────────────── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--cream);
+    }
+    nav img { height: 34px; }
+    nav a.back {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    nav a.back:hover { color: var(--charcoal); }
+
+    /* ── Main layout ──────────────────────────────────────── */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 73px);
+    }
+
+    /* ── Left panel — branding ────────────────────────────── */
+    .left-panel {
+      background: var(--olive-dark);
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: sticky;
+      top: 73px;
+      height: calc(100vh - 73px);
+      overflow: hidden;
+    }
+    /* Weave texture overlay */
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 22px, rgba(255,255,255,0.03) 22px, rgba(255,255,255,0.03) 23px),
+        repeating-linear-gradient(-45deg, transparent, transparent 22px, rgba(255,255,255,0.03) 22px, rgba(255,255,255,0.03) 23px);
+      pointer-events: none;
+    }
+    .left-top { position: relative; }
+    .left-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--olive-light);
+      margin-bottom: 24px;
+    }
+    .left-heading {
+      font-family: var(--serif);
+      font-size: clamp(32px, 3.2vw, 48px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+    .left-heading em {
+      font-style: italic;
+      color: var(--olive-light);
+    }
+    .left-perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+    }
+    .left-perks li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.5;
+    }
+    .left-perks li .perk-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(214,223,200,0.15);
+      border: 1px solid var(--olive-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .left-perks li .perk-dot svg {
+      width: 10px;
+      height: 10px;
+      color: var(--olive-light);
+    }
+    .left-bottom {
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+    }
+    .left-bottom p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+    .left-bottom strong {
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    /* ── Right panel — form ───────────────────────────────── */
+    .right-panel {
+      padding: 64px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--white);
+    }
+    .form-wrap {
+      max-width: 420px;
+      width: 100%;
+    }
+
+    /* Step indicators */
+    .steps-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 40px;
+    }
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      transition: all 0.3s;
+      background: var(--white);
+    }
+    .step-circle.active {
+      border-color: var(--olive);
+      color: var(--olive);
+    }
+    .step-circle.done {
+      border-color: var(--olive);
+      background: var(--olive);
+      color: var(--white);
+    }
+    .step-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .step-label.active { color: var(--charcoal); }
+    .step-connector {
+      width: 32px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 8px;
+    }
+    .step-connector.done { background: var(--olive-light); }
+
+    /* Form heading */
+    .form-heading {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .form-sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* Fields */
+    .field {
+      margin-bottom: 18px;
+    }
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 13px 16px;
+      font-family: var(--sans);
+      font-size: 15px;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .field input::placeholder { color: #B0ADA7; }
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--olive);
+      background: var(--white);
+    }
+    .field input.error { border-color: var(--error); }
+    .field-error {
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 5px;
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    /* Phone field with prefix */
+    .phone-wrap {
+      display: flex;
+      gap: 0;
+    }
+    .phone-prefix {
+      padding: 13px 14px;
+      background: var(--olive-faint);
+      border: 1px solid var(--border);
+      border-right: none;
+      border-radius: 2px 0 0 2px;
+      font-size: 15px;
+      color: var(--olive-dark);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .phone-wrap input {
+      border-radius: 0 2px 2px 0;
+      border-left: none;
+    }
+    .phone-wrap input:focus { border-color: var(--olive); }
+
+    /* Select arrow */
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--muted);
+      pointer-events: none;
+    }
+
+    /* Row layout for two fields side by side */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* Submit button */
+    .btn-submit {
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--olive);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--olive-dark); }
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-submit .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { opacity: 0.7; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Global form error */
+    .form-error-banner {
+      background: var(--error-bg);
+      border: 1px solid #EDCBCB;
+      border-radius: 2px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--error);
+      margin-bottom: 20px;
+      display: none;
+      line-height: 1.5;
+    }
+    .form-error-banner.show { display: block; }
+
+    /* ── OTP Step ─────────────────────────────────────────── */
+    #step-otp { display: none; }
+
+    .otp-email-display {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+    .otp-email-display strong {
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    /* 6 individual OTP boxes */
+    .otp-boxes {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .otp-box {
+      width: 52px;
+      height: 60px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 24px;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      caret-color: var(--olive);
+    }
+    .otp-box:focus {
+      border-color: var(--olive);
+      background: var(--white);
+    }
+    .otp-box.error { border-color: var(--error); }
+
+    .otp-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .resend-wrap {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .resend-btn {
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: var(--olive);
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      padding: 0;
+      font-family: var(--sans);
+      display: none;
+    }
+    .resend-btn.show { display: inline; }
+    .resend-countdown { color: var(--muted); font-size: 13px; }
+
+    .change-email-btn {
+      background: none;
+      border: none;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      font-family: var(--sans);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .change-email-btn:hover { color: var(--charcoal); }
+
+    /* ── Success screen ───────────────────────────────────── */
+    #step-success { display: none; text-align: center; }
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--olive-faint);
+      border: 1px solid var(--olive-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+    .success-icon svg { color: var(--olive); }
+    #step-success h2 {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+    }
+    #step-success p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .member-id-display {
+      background: var(--olive-faint);
+      border: 1px solid var(--olive-light);
+      border-radius: 2px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .member-id-display .mid-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 4px;
+    }
+    .member-id-display .mid-value {
+      font-family: var(--mono);
+      font-size: 22px;
+      color: var(--olive-dark);
+      font-weight: 400;
+    }
+    .btn-portal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      background: var(--olive);
+      color: var(--white);
+      padding: 15px 32px;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .btn-portal:hover { background: var(--olive-dark); }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    .form-footer-note {
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .form-footer-note a {
+      color: var(--olive);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── Mobile ───────────────────────────────────────────── */
+    @media (max-width: 800px) {
+      main { grid-template-columns: 1fr; }
+      .left-panel {
+        position: static;
+        height: auto;
+        padding: 40px 28px;
+      }
+      .left-panel .left-bottom { display: none; }
+      .right-panel { padding: 40px 28px; }
+      .form-wrap { max-width: 100%; }
+      .field-row { grid-template-columns: 1fr; gap: 0; }
+      .otp-box { width: 44px; height: 52px; font-size: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .left-panel { padding: 32px 20px; }
+      .right-panel { padding: 32px 20px; }
+      nav { padding: 14px 20px; }
+      .otp-boxes { gap: 7px; }
+      .otp-box { width: 40px; height: 48px; font-size: 18px; }
+    }
+    /* Sign-in mode — simplified */
+    .signin-mode-banner {
+    background: var(--olive-faint);
+    border: 1px solid var(--olive-light);
+    border-radius: 2px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--olive-dark);
+    margin-bottom: 24px;
+    display: none;
+    }
+    .signin-mode-banner.show { display: block; }
+    #signin-only-fields { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ───────────────────────────────────────────────── -->
+  <nav>
+    <a href="index.html">
+      <img
+        src="https://weavingvibes.com/cdn/shop/files/WV-Canva-Logo-1-1_b2793124-e179-4d02-a07e-6b00432c176a.png?v=1735047573"
+        alt="Weaving Vibes"
+      />
+    </a>
+    <a href="index.html" class="back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+  </nav>
+
+  <!-- ── Main ──────────────────────────────────────────────── -->
+  <main>
+
+    <!-- Left branding panel -->
+    <div class="left-panel">
+      <div class="left-top">
+        <p class="left-eyebrow">WV Launch Program</p>
+        <h2 class="left-heading">
+          The program<br />
+          built for designers<br />
+          who work with<br />
+          <em>intention.</em>
+        </h2>
+        <ul class="left-perks">
+          <li>
+            <span class="perk-dot">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            48-hour fabric recommendation
+          </li>
+          <li>
+            <span class="perk-dot">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            72-hour swatchbook dispatch
+          </li>
+          <li>
+            <span class="perk-dot">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Founder's time, directly
+          </li>
+          <li>
+            <span class="perk-dot">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            First access to every new fabric
+          </li>
+          <li>
+            <span class="perk-dot">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Pricing that never goes public
+          </li>
+          <li>
+            <span class="perk-dot">
+              <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            WV Verified Designer certificate
+          </li>
+        </ul>
+      </div>
+      <div class="left-bottom">
+        <p style="font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6;">
+            Already a member? <a href="signup.html?signin=true" style="color: var(--olive-light); text-decoration: underline; text-underline-offset: 2px;">Sign in here</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="right-panel">
+      <div class="form-wrap">
+
+        <!-- Step indicator -->
+        <div class="steps-indicator">
+          <div class="step-item">
+            <div class="step-circle active" id="circle-1">1</div>
+            <span class="step-label active" id="label-1">Your details</span>
+          </div>
+          <div class="step-connector" id="connector-1"></div>
+          <div class="step-item">
+            <div class="step-circle" id="circle-2">2</div>
+            <span class="step-label" id="label-2">Verify email</span>
+          </div>
+        </div>
+
+        <!-- ── STEP 1: Details form ─────────────────────── -->
+        <div id="step-details">
+            <div class="signin-mode-banner" id="signin-banner">
+                Signing in as an existing member. Just enter your email — we'll send a verification code.
+            </div>
+          <h1 class="form-heading">Join the program</h1>
+          <p class="form-sub">Takes 60 seconds. We'll send a code to your email to verify.</p>
+
+          <div class="form-error-banner" id="details-error"></div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="fname">Full name</label>
+              <input type="text" id="fname" placeholder="Priya Sharma" autocomplete="name" />
+              <div class="field-error" id="err-fname">Please enter your name</div>
+            </div>
+            <div class="field">
+              <label for="studio">Brand / Studio</label>
+              <input type="text" id="studio" placeholder="Studio Priya" />
+              <div class="field-error" id="err-studio">Please enter your studio name</div>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="city">City</label>
+              <input type="text" id="city" placeholder="Mumbai" autocomplete="address-level2" />
+              <div class="field-error" id="err-city">Please enter your city</div>
+            </div>
+            <div class="field">
+              <label for="worktype">How do you work?</label>
+              <div class="select-wrap">
+                <select id="worktype">
+                  <option value="" disabled selected>Select type</option>
+                  <option value="RTW">Ready to Wear</option>
+                  <option value="Couture">Couture</option>
+                  <option value="Bridal">Bridal</option>
+                  <option value="Accessories">Accessories</option>
+                  <option value="Homeware">Homeware</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field-error" id="err-worktype">Please select a type</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="phone">WhatsApp number</label>
+            <div class="phone-wrap">
+              <span class="phone-prefix">+91</span>
+              <input type="tel" id="phone" placeholder="98765 43210" maxlength="10" autocomplete="tel" />
+            </div>
+            <div class="field-error" id="err-phone">Please enter a valid 10-digit number</div>
+          </div>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" placeholder="you@studio.com" autocomplete="email" />
+            <div class="field-error" id="err-email">Please enter a valid email</div>
+          </div>
+
+          <button class="btn-submit" id="btn-send-otp" onclick="sendOTP()">
+            <span class="btn-text">Send verification code</span>
+            <div class="spinner"></div>
+          </button>
+
+          <p class="form-footer-note" id="footer-note">
+            New here? <a href="signup.html">Join the program</a>
+          </p>
+        </div>
+
+        <!-- ── STEP 2: OTP verification ──────────────────── -->
+        <div id="step-otp">
+          <h1 class="form-heading">Check your email</h1>
+          <p class="otp-email-display">
+            We sent a 6-digit code to<br />
+            <strong id="otp-email-display"></strong>
+          </p>
+
+          <div class="form-error-banner" id="otp-error"></div>
+
+          <div class="otp-boxes">
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-0" />
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-1" />
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-2" />
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-3" />
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-4" />
+            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-5" />
+          </div>
+
+          <div class="otp-actions">
+            <div class="resend-wrap">
+              <span class="resend-countdown" id="resend-countdown">Resend in <strong id="countdown-num">30</strong>s</span>
+              <button class="resend-btn" id="resend-btn" onclick="resendOTP()">Resend code</button>
+            </div>
+            <button class="change-email-btn" onclick="goBackToDetails()">Change email</button>
+          </div>
+
+          <button class="btn-submit" id="btn-verify-otp" onclick="verifyOTP()">
+            <span class="btn-text">Verify & continue</span>
+            <div class="spinner"></div>
+          </button>
+        </div>
+
+        <!-- ── STEP 3: Success ───────────────────────────── -->
+        <div id="step-success">
+          <div class="success-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2 id="success-heading">Welcome.</h2>
+          <p id="success-body">You're now part of the WV Launch Program. Your portal is ready.</p>
+          <div class="member-id-display">
+            <div class="mid-label">Your member ID</div>
+            <div class="mid-value" id="success-member-id">WV-0001</div>
+          </div>
+          <a href="portal.html" class="btn-portal" id="go-portal-btn">
+            Enter your portal
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script defer>
+    // ── Config ───────────────────────────────────────────────
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyJpniIY4dlSSHww7y5RvHVafPbTnpWl9wiQkBOGHNS0Dqra0XvhOx6xtEUL5dI7DJ8/exec";
+    const SECRET = "wv_launch_launch_2026";
+
+    // ── State ────────────────────────────────────────────────
+    let currentEmail = "";
+    let isExistingMember = false;
+    let countdownTimer = null;
+
+    // ── Helpers ──────────────────────────────────────────────
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      if (loading) {
+        btn.disabled = true;
+        btn.classList.add("loading");
+      } else {
+        btn.disabled = false;
+        btn.classList.remove("loading");
+      }
+    }
+
+    function showError(bannerId, msg) {
+      const el = document.getElementById(bannerId);
+      el.textContent = msg;
+      el.classList.add("show");
+    }
+
+    function hideError(bannerId) {
+      document.getElementById(bannerId).classList.remove("show");
+    }
+
+    function showFieldError(id) {
+      document.getElementById("err-" + id).classList.add("show");
+      document.getElementById(id).classList.add("error");
+    }
+
+    function clearFieldError(id) {
+      document.getElementById("err-" + id).classList.remove("show");
+      document.getElementById(id).classList.remove("error");
+    }
+
+    async function callGAS(payload) {
+        const res = await fetch(GAS_URL, {
+            method: "POST",
+            redirect: "follow",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ ...payload, secret: SECRET })
+        });
+        return res.json();
+    }
+
+    // ── Step navigation ──────────────────────────────────────
+    function showStep(step) {
+      document.getElementById("step-details").style.display  = step === "details"  ? "block" : "none";
+      document.getElementById("step-otp").style.display      = step === "otp"      ? "block" : "none";
+      document.getElementById("step-success").style.display  = step === "success"  ? "block" : "none";
+
+      if (step === "otp") {
+        document.getElementById("circle-1").classList.add("done");
+        document.getElementById("circle-1").innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="1.8">
+            <path d="M2 6l3 3 5-5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>`;
+        document.getElementById("label-1").classList.remove("active");
+        document.getElementById("connector-1").classList.add("done");
+        document.getElementById("circle-2").classList.add("active");
+        document.getElementById("label-2").classList.add("active");
+        setTimeout(() => document.getElementById("otp-0").focus(), 100);
+      }
+    }
+
+    // ── Validate details form ────────────────────────────────
+    function validateDetails() {
+        let valid = true;
+        const isSignIn = new URLSearchParams(window.location.search).get("signin") === "true";
+        const fields = ["fname", "studio", "city", "worktype", "phone", "email"];
+        fields.forEach(f => clearFieldError(f));
+
+        if (!isSignIn) {
+            if (!document.getElementById("fname").value.trim()) { showFieldError("fname"); valid = false; }
+            if (!document.getElementById("studio").value.trim()) { showFieldError("studio"); valid = false; }
+            if (!document.getElementById("city").value.trim()) { showFieldError("city"); valid = false; }
+            if (!document.getElementById("worktype").value) { showFieldError("worktype"); valid = false; }
+            const phone = document.getElementById("phone").value.trim().replace(/\s/g, "");
+            if (!phone || phone.length !== 10 || !/^\d+$/.test(phone)) { showFieldError("phone"); valid = false; }
+        }
+
+        const email = document.getElementById("email").value.trim();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError("email"); valid = false; }
+
+        return valid;
+    }
+
+    // ── Send OTP ─────────────────────────────────────────────
+    async function sendOTP() {
+      hideError("details-error");
+      if (!validateDetails()) return;
+
+      currentEmail = document.getElementById("email").value.trim().toLowerCase();
+      setLoading("btn-send-otp", true);
+
+      try {
+        const res = await callGAS({ action: "sendOTP", email: currentEmail });
+
+        if (res.status === "success") {
+          document.getElementById("otp-email-display").textContent = currentEmail;
+          showStep("otp");
+          startCountdown();
+        } else {
+          showError("details-error", res.message || "Something went wrong. Please try again.");
+        }
+      } catch (err) {
+        showError("details-error", "Connection error. Please check your internet and try again.");
+      }
+
+      setLoading("btn-send-otp", false);
+    }
+
+    // ── Resend OTP ───────────────────────────────────────────
+    async function resendOTP() {
+      document.getElementById("resend-btn").classList.remove("show");
+      document.getElementById("resend-countdown").style.display = "inline";
+      hideError("otp-error");
+
+      try {
+        await callGAS({ action: "sendOTP", email: currentEmail });
+        startCountdown();
+        // Clear boxes
+        for (let i = 0; i < 6; i++) {
+          const box = document.getElementById("otp-" + i);
+          box.value = "";
+          box.classList.remove("error");
+        }
+        document.getElementById("otp-0").focus();
+      } catch (err) {
+        showError("otp-error", "Could not resend. Please try again.");
+      }
+    }
+
+    // ── Countdown timer ──────────────────────────────────────
+    function startCountdown() {
+      let secs = 30;
+      document.getElementById("countdown-num").textContent = secs;
+      document.getElementById("resend-countdown").style.display = "inline";
+      document.getElementById("resend-btn").classList.remove("show");
+
+      clearInterval(countdownTimer);
+      countdownTimer = setInterval(() => {
+        secs--;
+        document.getElementById("countdown-num").textContent = secs;
+        if (secs <= 0) {
+          clearInterval(countdownTimer);
+          document.getElementById("resend-countdown").style.display = "none";
+          document.getElementById("resend-btn").classList.add("show");
+        }
+      }, 1000);
+    }
+
+    // ── Verify OTP ───────────────────────────────────────────
+    async function verifyOTP() {
+      hideError("otp-error");
+      const otp = Array.from({ length: 6 }, (_, i) => document.getElementById("otp-" + i).value).join("");
+
+      if (otp.length < 6) {
+        showError("otp-error", "Please enter the full 6-digit code.");
+        return;
+      }
+
+      setLoading("btn-verify-otp", true);
+
+      try {
+        const res = await callGAS({ action: "verifyOTP", email: currentEmail, otp });
+
+        if (res.status === "success") {
+          if (res.data.isNew) {
+            // New designer — complete signup
+            await completeSignup(res.data.email);
+          } else {
+            // Existing member — save session and go to portal
+            saveSession(res.data.designer);
+            showSuccessScreen(res.data.designer, false);
+          }
+        } else {
+          showError("otp-error", res.message || "Incorrect code. Please try again.");
+          for (let i = 0; i < 6; i++) document.getElementById("otp-" + i).classList.add("error");
+        }
+      } catch (err) {
+        showError("otp-error", "Connection error. Please try again.");
+      }
+
+      setLoading("btn-verify-otp", false);
+    }
+
+    // ── Complete signup for new designers ────────────────────
+    async function completeSignup(email) {
+      const payload = {
+        action: "completeSignup",
+        name:     document.getElementById("fname").value.trim(),
+        studio:   document.getElementById("studio").value.trim(),
+        city:     document.getElementById("city").value.trim(),
+        whatsapp: "+91" + document.getElementById("phone").value.trim().replace(/\s/g, ""),
+        email:    email,
+        workType: document.getElementById("worktype").value
+      };
+
+      const res = await callGAS(payload);
+
+      if (res.status === "success") {
+        saveSession(res.data.designer);
+        showSuccessScreen(res.data.designer, true);
+      } else {
+        showError("otp-error", res.message || "Signup failed. Please try again.");
+      }
+    }
+
+    // ── Save session to localStorage ─────────────────────────
+    function saveSession(designer) {
+      localStorage.setItem("wv_designer", JSON.stringify(designer));
+    }
+
+    // ── Show success screen ──────────────────────────────────
+    function showSuccessScreen(designer, isNew) {
+      document.getElementById("success-heading").textContent = "Welcome" + (isNew ? "" : " back") + ", " + designer.name.split(" ")[0] + ".";
+      document.getElementById("success-body").textContent = isNew
+        ? "You're now part of the WV Launch Program. Your member ID is ready."
+        : "Good to have you back. Your portal is right here.";
+      document.getElementById("success-member-id").textContent = designer.memberId;
+      clearInterval(countdownTimer);
+      showStep("success");
+    }
+
+    // ── Go back to details ───────────────────────────────────
+    function goBackToDetails() {
+      clearInterval(countdownTimer);
+      // Reset step indicators
+      const c1 = document.getElementById("circle-1");
+      c1.classList.remove("done");
+      c1.classList.add("active");
+      c1.textContent = "1";
+      document.getElementById("label-1").classList.add("active");
+      document.getElementById("connector-1").classList.remove("done");
+      document.getElementById("circle-2").classList.remove("active");
+      document.getElementById("label-2").classList.remove("active");
+      hideError("otp-error");
+      showStep("details");
+    }
+
+    // ── OTP box keyboard behavior ────────────────────────────
+    function setupOTPBoxes() {
+      for (let i = 0; i < 6; i++) {
+        const box = document.getElementById("otp-" + i);
+
+        box.addEventListener("input", (e) => {
+          // Clear error state on input
+          for (let j = 0; j < 6; j++) document.getElementById("otp-" + j).classList.remove("error");
+          hideError("otp-error");
+
+          const val = e.target.value.replace(/\D/g, "");
+          e.target.value = val.slice(-1);
+
+          if (val && i < 5) document.getElementById("otp-" + (i + 1)).focus();
+
+          // Auto-submit when all 6 filled
+          const full = Array.from({ length: 6 }, (_, k) => document.getElementById("otp-" + k).value).join("");
+          if (full.length === 6) verifyOTP();
+        });
+
+        box.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && !box.value && i > 0) {
+            document.getElementById("otp-" + (i - 1)).focus();
+          }
+          if (e.key === "ArrowLeft" && i > 0) document.getElementById("otp-" + (i - 1)).focus();
+          if (e.key === "ArrowRight" && i < 5) document.getElementById("otp-" + (i + 1)).focus();
+        });
+
+        // Handle paste on any box
+        box.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const pasted = (e.clipboardData || window.clipboardData).getData("text").replace(/\D/g, "").slice(0, 6);
+          pasted.split("").forEach((ch, k) => {
+            const target = document.getElementById("otp-" + k);
+            if (target) target.value = ch;
+          });
+          const lastFilled = Math.min(pasted.length, 5);
+          document.getElementById("otp-" + lastFilled).focus();
+          if (pasted.length === 6) setTimeout(verifyOTP, 100);
+        });
+      }
+    }
+
+    // ── Check if already logged in ───────────────────────────
+    function checkExistingSession() {
+      const session = localStorage.getItem("wv_designer");
+      if (session) {
+        try {
+          const designer = JSON.parse(session);
+          if (designer && designer.email) {
+            window.location.href = "portal.html";
+          }
+        } catch (e) {
+          localStorage.removeItem("wv_designer");
+        }
+      }
+    }
+
+    // ── Init ─────────────────────────────────────────────
+    checkExistingSession();
+    setupOTPBoxes();
+    showStep("details");
+
+    // ── Sign-in mode (existing member) ───────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("signin") === "true") {
+    document.getElementById("signin-banner").classList.add("show");
+    ["fname","studio","city","worktype","phone"].forEach(id => {
+        const field = document.getElementById(id);
+        if (field) field.closest(".field").style.display = "none";
+    });
+    document.querySelectorAll(".field-row").forEach(row => row.style.display = "none");
+    document.getElementById("email").closest(".field").style.display = "block";
+    document.getElementById("btn-send-otp").querySelector(".btn-text").textContent = "Send sign-in code";
+    document.querySelector(".form-heading").textContent = "Sign in";
+    document.querySelector(".form-sub").textContent = "Enter your registered email. We'll send a one-time code.";
+    // Fix right panel footer
+    document.getElementById("footer-note").innerHTML = 'New here? <a href="signup.html">Join the program</a>';
+    // Fix left panel footer
+    document.querySelector(".left-bottom p").innerHTML = 'New here? <a href="signup.html" style="color:var(--olive-light);text-decoration:underline;text-underline-offset:2px;">Join the program</a>';
+    } else {
+    // On join page, right footer should say sign in
+        document.getElementById("footer-note").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
