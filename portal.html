@@ -1278,7 +1278,14 @@
     async function verifySessionStillValid() {
       try {
         const res = await callGAS({ action: "getDesigner", email: designer.email });
-        if (res.status !== "success") {
+
+        // Only treat this as "account deleted" if the backend explicitly
+        // says the designer wasn't found. Any other failure (slow network,
+        // malformed response, temporary backend hiccup) should NOT log
+        // the person out — that's what caused real users to get bounced
+        // to signup on flaky mobile connections.
+        const notFound = res.status === "error" && /not found/i.test(res.message || "");
+        if (notFound) {
           localStorage.removeItem("wv_designer");
           window.location.href = "signup.html";
         }
