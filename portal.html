@@ -34,6 +34,7 @@
 
     /* ── Reset ───────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; }
     body {
       background: var(--cream);
       color: var(--charcoal);
@@ -59,6 +60,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
+      max-width: 100vw;
     }
     nav img.logo { height: 32px; flex-shrink: 0; }
 
@@ -68,7 +70,14 @@
       align-items: center;
       gap: 0;
       height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      flex-shrink: 1;
+      min-width: 0;
     }
+    .nav-tabs::-webkit-scrollbar { display: none; }
     .nav-tab {
       height: 100%;
       display: flex;
@@ -151,6 +160,8 @@
       max-width: 1100px;
       margin: 0 auto;
       padding: 48px 32px 80px;
+      width: 100%;
+      overflow-x: hidden;
     }
 
     /* ── Tab panels ──────────────────────────────────────── */
@@ -862,8 +873,11 @@
       .profile-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 680px) {
-      nav { padding: 0 16px; }
-      .nav-tab { padding: 0 12px; font-size: 12px; }
+      nav { padding: 0 12px; gap: 10px; }
+      nav img.logo { height: 26px; }
+      .nav-tab { padding: 0 10px; font-size: 12px; }
+      .nav-member-btn { padding: 7px 10px; font-size: 12px; }
+      .nav-member-btn span#nav-member-name { max-width: 60px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .page { padding: 32px 16px 60px; }
       .fabric-grid { grid-template-columns: 1fr; }
       .visit-options { grid-template-columns: 1fr; }
@@ -1240,7 +1254,6 @@
 
   <script defer>
     // ── Config ────────────────────────────────────────────────
-    
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyoBF-CDJzHmgipaAOzcb1YwYUUz98pyEvYV9q81E61wQoAbt7Bnwk0R2WvHb2IWvnj-A/exec";
     const SECRET  = "wv_launch_launch_2026";
 

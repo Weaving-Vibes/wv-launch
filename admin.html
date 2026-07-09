@@ -597,8 +597,11 @@
               <input type="number" id="f-stock" placeholder="1000" min="1" />
             </div>
             <div class="field">
-              <label for="f-image">Image URL (Cloudinary)</label>
-              <input type="text" id="f-image" placeholder="https://res.cloudinary.com/..." />
+              <label for="f-image">Fabric photo (Google Drive link)</label>
+              <input type="text" id="f-image" placeholder="Paste Google Drive share link…" />
+              <p style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;">
+                In Drive: right-click the image → Share → "Anyone with the link" → Copy link, then paste here.
+              </p>
             </div>
           </div>
           <div class="field">
@@ -1027,12 +1030,22 @@
       }
     }
 
+    function toDriveDirectLink(url) {
+      if (!url) return "";
+      // Already a direct-render URL (googleusercontent, or any non-Drive URL) — leave as-is
+      const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (match && match[1]) {
+        return `https://lh3.googleusercontent.com/d/${match[1]}`;
+      }
+      return url.trim();
+    }
+
     async function postFabric() {
       hideError("post-fabric-error");
       const name = document.getElementById("f-name").value.trim();
       const price = document.getElementById("f-price").value;
       const stock = document.getElementById("f-stock").value;
-      const image = document.getElementById("f-image").value.trim();
+      const image = toDriveDirectLink(document.getElementById("f-image").value.trim());
       const desc = document.getElementById("f-desc").value.trim();
 
       if (!name || !price || !stock) {
