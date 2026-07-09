@@ -927,9 +927,17 @@
         const res = await callGAS({ action: "verifyOTP", email: currentEmail, otp });
 
         if (res.status === "success") {
+          const isSignIn = new URLSearchParams(window.location.search).get("signin") === "true";
+
           if (res.data.isNew) {
-            // New designer — complete signup
-            await completeSignup(res.data.email);
+            if (isSignIn) {
+              // They tried to sign in but no account exists for this email
+              showError("otp-error", "No account found for this email. Please sign up first.");
+              for (let i = 0; i < 6; i++) document.getElementById("otp-" + i).classList.add("error");
+            } else {
+              // New designer going through the join flow — complete signup
+              await completeSignup(res.data.email);
+            }
           } else {
             // Existing member — save session and go to portal
             saveSession(res.data.designer);

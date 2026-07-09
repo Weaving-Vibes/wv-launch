@@ -1254,7 +1254,7 @@
 
   <script defer>
     // ── Config ────────────────────────────────────────────────
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyoBF-CDJzHmgipaAOzcb1YwYUUz98pyEvYV9q81E61wQoAbt7Bnwk0R2WvHb2IWvnj-A/exec";
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyJpniIY4dlSSHww7y5RvHVafPbTnpWl9wiQkBOGHNS0Dqra0XvhOx6xtEUL5dI7DJ8/exec";
     const SECRET  = "wv_launch_launch_2026";
 
     // ── State ─────────────────────────────────────────────────
@@ -1270,6 +1270,21 @@
         designer = JSON.parse(raw);
         if (!designer || !designer.email) { window.location.href = "signup.html"; return; }
       } catch (e) { window.location.href = "signup.html"; return; }
+    }
+
+    // Re-check against the sheet in the background. If the designer record
+    // was removed (e.g. deleted during testing/admin cleanup), sign them out
+    // instead of letting a stale localStorage session keep working.
+    async function verifySessionStillValid() {
+      try {
+        const res = await callGAS({ action: "getDesigner", email: designer.email });
+        if (res.status !== "success") {
+          localStorage.removeItem("wv_designer");
+          window.location.href = "signup.html";
+        }
+      } catch (e) {
+        // Connection error — don't sign the user out over a network hiccup
+      }
     }
 
     function signOut() {
@@ -1686,6 +1701,7 @@
     loadSession();
     populateUI();
     loadDrops();
+    verifySessionStillValid();
 
     // Set min date for visit booking to tomorrow
     const tomorrow = new Date();
