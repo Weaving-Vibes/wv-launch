@@ -245,6 +245,7 @@
       position: absolute;
       bottom: 28px;
       left: 28px;
+      right: 28px;
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 2px;
@@ -252,6 +253,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      max-width: fit-content;
     }
     .member-count-pill .dot {
       width: 7px;
@@ -259,6 +261,7 @@
       border-radius: 50%;
       background: var(--olive);
       animation: pulse 2.4s ease-in-out infinite;
+      flex-shrink: 0;
     }
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
@@ -310,6 +313,7 @@
       gap: 1px;
       background: var(--border);
       border: 1px solid var(--border);
+      margin-top: 32px;
     }
     .benefit-card {
       background: var(--cream);
@@ -389,8 +393,8 @@
     }
     .members-strip .container {
       display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 64px;
+      grid-template-columns: 1fr;
+      gap: 0;
       align-items: center;
     }
     .members-strip-heading {
@@ -526,10 +530,6 @@
         gap: 40px;
       }
       .how-step::after { display: none; }
-      .members-strip .container {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
       .members-list {
         grid-template-columns: 1fr;
       }
@@ -539,12 +539,17 @@
         gap: 12px;
       }
       nav .signin-link { display: none; }
+      .member-count-pill { left: 16px; bottom: 16px; right: 16px; }
     }
 
     @media (max-width: 480px) {
       .hero { padding: 56px 0 48px; }
       .benefits, .how { padding: 56px 0; }
       .cta-section { padding: 64px 0; }
+      .container { padding: 0 18px; }
+      nav .nav-cta { padding: 9px 16px; font-size: 12.5px; }
+      .btn-primary { padding: 15px 28px; width: 100%; justify-content: center; }
+      .hero-actions { width: 100%; }
     }
   </style>
 </head>
@@ -571,7 +576,6 @@
   <section class="hero">
     <div class="container">
       <div class="hero-left">
-        <p class="hero-eyebrow">For designers · By invitation only</p>
         <h1>Fabric.<br /><em>First.</em><br />For you.</h1>
         <p class="hero-sub">
           Weaving Vibes works directly with independent designers.
@@ -611,7 +615,6 @@
   <section class="benefits">
     <div class="container">
       <p class="section-eyebrow reveal">What you get</p>
-      <h2 class="section-heading reveal">Everything a serious designer needs. Nothing they don't.</h2>
       <div class="benefits-grid">
 
         <div class="benefit-card reveal">
@@ -704,9 +707,6 @@
   <!-- ── Dark strip ─────────────────────────────────────────── -->
   <section class="members-strip">
     <div class="container">
-      <h2 class="members-strip-heading reveal">
-        Built for designers<br/>who take their<br/><em>craft seriously.</em>
-      </h2>
       <ul class="members-list reveal">
         <li>Hemp, bamboo, and natural blends</li>
         <li>Low minimum order quantities</li>

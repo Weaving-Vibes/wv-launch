@@ -629,14 +629,18 @@
     /* ── Ideas tab ───────────────────────────────────────── */
     .ideas-sections {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
+      grid-template-columns: 1fr;
+      justify-items: center;
     }
     .ideas-card {
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 2px;
       padding: 32px;
+    }
+    .ideas-card-solo {
+      width: 100%;
+      max-width: 560px;
     }
     .ideas-card-eyebrow {
       font-size: 11px;
@@ -715,6 +719,8 @@
       gap: 16px;
     }
     .profile-field:last-of-type { border-bottom: none; }
+    .profile-card--no-title { padding-top: 24px; }
+    .profile-field--first { padding-top: 0; }
     .profile-field-label {
       font-size: 11px;
       font-weight: 500;
@@ -991,80 +997,12 @@
     <div class="tab-panel" id="panel-ideas">
       <p class="section-eyebrow">Collaborate</p>
       <h1 class="section-title">Share your ideas</h1>
-      <p class="section-sub">Drop a season brief or start a custom fabric — our team will respond within 48 hours.</p>
+      <p class="section-sub">Tell us what you need — fibre, weight, weave. Our team will respond within 48 hours.</p>
 
       <div class="ideas-sections">
 
-        <!-- Season brief -->
-        <div class="ideas-card">
-          <p class="ideas-card-eyebrow">Season brief</p>
-          <h2 class="ideas-card-title">Tell us about your next season</h2>
-          <p class="ideas-card-sub">We'll shortlist fabrics built around your vision and get back within 48 hours.</p>
-
-          <div class="form-error" id="brief-error"></div>
-
-          <div id="brief-form">
-            <div class="field">
-              <label for="brief-collection">Collection name</label>
-              <input type="text" id="brief-collection" placeholder="e.g. Monsoon Edit 2026" />
-            </div>
-            <div class="field">
-              <label for="brief-season">Season type</label>
-              <div class="select-wrap">
-                <select id="brief-season">
-                  <option value="" disabled selected>Select season</option>
-                  <option value="SS">Spring / Summer</option>
-                  <option value="AW">Autumn / Winter</option>
-                  <option value="Resort">Resort</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-            </div>
-            <div class="field">
-              <label>What are you making?</label>
-              <div class="chips" id="making-chips">
-                <div class="chip" data-value="RTW" onclick="toggleChip(this, 'making-chips')">Ready to Wear</div>
-                <div class="chip" data-value="Couture" onclick="toggleChip(this, 'making-chips')">Couture</div>
-                <div class="chip" data-value="Accessories" onclick="toggleChip(this, 'making-chips')">Accessories</div>
-                <div class="chip" data-value="Home" onclick="toggleChip(this, 'making-chips')">Homeware</div>
-              </div>
-            </div>
-            <div class="field">
-              <label for="brief-mood">Mood & direction</label>
-              <textarea id="brief-mood" placeholder="Describe the feel, reference colours, textures, drape, anything that captures the vision…"></textarea>
-            </div>
-            <div class="field">
-              <label for="brief-budget">Budget per metre (optional)</label>
-              <div class="select-wrap">
-                <select id="brief-budget">
-                  <option value="">No preference</option>
-                  <option value="Under ₹300">Under ₹300</option>
-                  <option value="₹300–600">₹300–600</option>
-                  <option value="₹600–1000">₹600–1000</option>
-                  <option value="Above ₹1000">Above ₹1000</option>
-                </select>
-              </div>
-            </div>
-            <button class="btn-submit" id="btn-brief" onclick="submitBrief()">
-              <span class="btn-text">Send brief</span>
-              <div class="spinner"></div>
-            </button>
-            <p class="form-note">Our team typically replies within 48 hours with fabric suggestions.</p>
-          </div>
-
-          <div class="ideas-success" id="brief-success">
-            <div class="s-icon">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M4 10l4 4 8-8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Brief received.</h3>
-            <p>We'll get back to you within 48 hours with fabric suggestions tailored to your collection.</p>
-          </div>
-        </div>
-
         <!-- Custom fabric -->
-        <div class="ideas-card">
+        <div class="ideas-card ideas-card-solo">
           <p class="ideas-card-eyebrow">Custom development</p>
           <h2 class="ideas-card-title">Want something made from scratch?</h2>
           <p class="ideas-card-sub">Tell us what you need — fibre, weight, weave. We'll call you within 24 hours.</p>
@@ -1157,9 +1095,8 @@
       <div class="profile-grid">
 
         <!-- Details card -->
-        <div class="profile-card">
-          <div class="profile-card-title">Designer details</div>
-          <div class="profile-field">
+        <div class="profile-card profile-card--no-title">
+          <div class="profile-field profile-field--first">
             <span class="profile-field-label">Name</span>
             <span class="profile-field-value" id="prof-name">—</span>
           </div>
@@ -1303,7 +1240,8 @@
 
   <script defer>
     // ── Config ────────────────────────────────────────────────
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbyJpniIY4dlSSHww7y5RvHVafPbTnpWl9wiQkBOGHNS0Dqra0XvhOx6xtEUL5dI7DJ8/exec";
+    
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyoBF-CDJzHmgipaAOzcb1YwYUUz98pyEvYV9q81E61wQoAbt7Bnwk0R2WvHb2IWvnj-A/exec";
     const SECRET  = "wv_launch_launch_2026";
 
     // ── State ─────────────────────────────────────────────────
@@ -1529,6 +1467,16 @@
       document.getElementById("visit-video-card").classList.toggle("selected", type === "video");
       document.getElementById("visit-form-title").textContent =
         type === "studio" ? "Studio visit details" : "Video meeting details";
+
+      // On small screens the form sits below the fold — scroll it into view
+      if (window.innerWidth <= 900) {
+        const formWrap = document.querySelector(".visit-form-wrap");
+        if (formWrap) {
+          const navHeight = document.querySelector("nav").offsetHeight || 64;
+          const top = formWrap.getBoundingClientRect().top + window.scrollY - navHeight - 16;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
+      }
     }
 
     async function bookVisit() {
@@ -1582,48 +1530,6 @@
     function getSelectedChips(groupId) {
       return Array.from(document.querySelectorAll(`#${groupId} .chip.selected`))
         .map(c => c.dataset.value).join(", ");
-    }
-
-    // ── Season brief ──────────────────────────────────────────
-    async function submitBrief() {
-      const collection = document.getElementById("brief-collection").value.trim();
-      const season = document.getElementById("brief-season").value;
-      const mood = document.getElementById("brief-mood").value.trim();
-      const errEl = document.getElementById("brief-error");
-      errEl.classList.remove("show");
-
-      if (!collection) { errEl.textContent = "Please enter your collection name."; errEl.classList.add("show"); return; }
-      if (!mood) { errEl.textContent = "Please describe the mood and direction."; errEl.classList.add("show"); return; }
-
-      const btn = document.getElementById("btn-brief");
-      btn.disabled = true; btn.classList.add("loading");
-
-      try {
-        const res = await callGAS({
-          action: "submitSeasonBrief",
-          designerEmail: designer.email,
-          designerName: designer.name,
-          collectionName: collection,
-          seasonType: season,
-          whatMaking: getSelectedChips("making-chips"),
-          moodDescription: mood,
-          budgetRange: document.getElementById("brief-budget").value,
-          imageUrls: ""
-        });
-
-        if (res.status === "success") {
-          document.getElementById("brief-form").style.display = "none";
-          document.getElementById("brief-success").style.display = "block";
-        } else {
-          errEl.textContent = res.message || "Something went wrong. Please try again.";
-          errEl.classList.add("show");
-        }
-      } catch (err) {
-        errEl.textContent = "Connection error. Please try again.";
-        errEl.classList.add("show");
-      }
-
-      btn.disabled = false; btn.classList.remove("loading");
     }
 
     // ── Custom fabric ─────────────────────────────────────────
