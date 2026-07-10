@@ -187,11 +187,15 @@
       text-underline-offset: 3px;
     }
 
-    /* Hero right — woven texture block */
+    /* Hero right — factory photo block */
     .hero-visual {
       position: relative;
       aspect-ratio: 4/5;
-      background: var(--olive-faint);
+      background-color: var(--olive-faint);
+      background-image: url('assets/wv_factory.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       border-radius: 2px;
       overflow: hidden;
       display: flex;
@@ -199,6 +203,8 @@
       justify-content: center;
     }
     .hero-visual-inner {
+      position: relative;
+      z-index: 2;
       text-align: center;
       padding: 40px;
     }
@@ -206,9 +212,10 @@
       font-family: var(--serif);
       font-size: 120px;
       font-weight: 400;
-      color: var(--olive-light);
+      color: rgba(255,255,255,0.92);
       line-height: 1;
       user-select: none;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.25);
     }
     .hero-visual-inner .visual-tag {
       font-family: var(--sans);
@@ -216,33 +223,26 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--olive);
+      color: var(--olive-light);
       margin-top: 16px;
     }
-    /* Subtle weave lines overlay */
+    /* Dark gradient overlay so text + pill stay legible over the photo */
     .hero-visual::before {
       content: '';
       position: absolute;
       inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 18px,
-          rgba(107,124,78,0.07) 18px,
-          rgba(107,124,78,0.07) 19px
-        ),
-        repeating-linear-gradient(
-          -45deg,
-          transparent,
-          transparent 18px,
-          rgba(107,124,78,0.07) 18px,
-          rgba(107,124,78,0.07) 19px
-        );
+      z-index: 1;
+      background: linear-gradient(
+        180deg,
+        rgba(30, 34, 20, 0.32) 0%,
+        rgba(30, 34, 20, 0.18) 45%,
+        rgba(30, 34, 20, 0.55) 100%
+      );
     }
     /* Member count pill */
     .member-count-pill {
       position: absolute;
+      z-index: 2;
       bottom: 28px;
       left: 28px;
       right: 28px;
@@ -254,6 +254,7 @@
       align-items: center;
       gap: 10px;
       max-width: fit-content;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
     .member-count-pill .dot {
       width: 7px;
@@ -550,6 +551,7 @@
       nav .nav-cta { padding: 9px 16px; font-size: 12.5px; }
       .btn-primary { padding: 15px 28px; width: 100%; justify-content: center; }
       .hero-actions { width: 100%; }
+      .hero-visual-inner .wv-mark { font-size: 64px; }
     }
   </style>
 </head>
