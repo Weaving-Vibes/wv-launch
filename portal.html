@@ -372,6 +372,11 @@
       padding: 24px;
     }
     .modal-overlay.open { display: flex; }
+    body.modal-open {
+      position: fixed;
+      width: 100%;
+      overflow: hidden;
+    }
     .modal {
       background: var(--white);
       border-radius: 2px;
@@ -380,6 +385,7 @@
       max-height: 90vh;
       overflow-y: auto;
     }
+    
     .modal-header {
       padding: 24px 28px 20px;
       border-bottom: 1px solid var(--border);
@@ -1443,12 +1449,16 @@
       document.getElementById("req-timeline").value = "";
       document.getElementById("req-notes").value = "";
       document.getElementById("request-modal").classList.add("open");
-      document.body.style.overflow = "hidden";
+      window._scrollY = window.scrollY;
+      document.body.style.top = `-${window._scrollY}px`;
+      document.body.classList.add("modal-open");
     }
 
     function closeRequestModal() {
       document.getElementById("request-modal").classList.remove("open");
-      document.body.style.overflow = "";
+      document.body.classList.remove("modal-open");
+      document.body.style.top = "";
+      window.scrollTo(0, window._scrollY || 0);
       currentFabric = null;
     }
 
