@@ -673,10 +673,9 @@
           <div class="field">
             <label for="phone">WhatsApp number <span style="color:var(--error);">*</span></label>
             <div class="phone-wrap">
-              <span class="phone-prefix">+91</span>
-              <input type="tel" id="phone" placeholder="98765 43210" maxlength="10" autocomplete="tel" />
+              <input type="tel" id="phone" placeholder="e.g. +91 98765 43210" maxlength="20" autocomplete="tel" />
             </div>
-            <div class="field-error" id="err-phone">Please enter a valid 10-digit number</div>
+            <div class="field-error" id="err-phone">Please enter a valid WhatsApp number (with country code)</div>
           </div>
 
           <div class="field">
@@ -836,8 +835,10 @@
             if (!document.getElementById("fname").value.trim()) { showFieldError("fname"); valid = false; }
             if (!document.getElementById("studio").value.trim()) { showFieldError("studio"); valid = false; }
             if (!document.getElementById("city").value.trim()) { showFieldError("city"); valid = false; }
-            const phone = document.getElementById("phone").value.trim().replace(/\s/g, "");
-            if (!phone || phone.length !== 10 || !/^\d+$/.test(phone)) { showFieldError("phone"); valid = false; }
+            const phone = document.getElementById("phone").value.trim().replace(/[\s-]/g, "");
+            // Accepts optional leading + followed by 7–15 digits, so both Indian
+            // numbers (with or without +91) and foreign numbers work.
+            if (!phone || !/^\+?\d{7,15}$/.test(phone)) { showFieldError("phone"); valid = false; }
         }
 
         const email = document.getElementById("email").value.trim();
@@ -961,7 +962,7 @@
         name:     document.getElementById("fname").value.trim(),
         studio:   document.getElementById("studio").value.trim(),
         city:     document.getElementById("city").value.trim(),
-        whatsapp: "+91" + document.getElementById("phone").value.trim().replace(/\s/g, ""),
+        whatsapp: document.getElementById("phone").value.trim().replace(/[\s-]/g, ""),
         email:    email,
         workType: document.getElementById("worktype").value
       };
